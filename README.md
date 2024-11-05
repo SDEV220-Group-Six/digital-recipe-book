@@ -16,8 +16,11 @@ In order to not overwrite anything on the main branch, run the following command
 
 # getting latest updates from main
 It's possible that while you are working on your branch, changes have been done to main. It is a good idea to get those changes first, and only then push your own to github. To do this, run the following commands:
+
 `git checkout your-branch` - make sure you are working on your branch
+
 `git fetch origin` - fetch the latest changes from the remote repository. This updates your local information about the remote branches but does not change your working directory.
+
 `git merge origin/main` - merge any changes from origin/main (the main branch on the remote) into your branch to make sure you’re up-to-date. This allows you to test and address any conflicts locally before pushing your work. If there are any conflicts, Git will prompt you to resolve them.
 
 # pushing your changes
