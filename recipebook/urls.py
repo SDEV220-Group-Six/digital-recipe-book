@@ -17,8 +17,14 @@ Including another URLconf
 
 from django.contrib import admin
 from django.urls import path, include
+from django.shortcuts import redirect
+from . import views
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("", include("recipes.urls")),
+    path("", lambda request: redirect("home", permanent=True)),
+    path("login.html", views.RecipeBookLoginView.as_view(), name="login"),
+    path("logout.html", views.RecipeBookLogoutView.as_view(), name="logout"),
+    path("profile/", views.profile, name="profile"),
+    path("", include("recipes.urls"))
 ]

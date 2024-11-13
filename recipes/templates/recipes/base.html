@@ -20,9 +20,11 @@
         <a href="{% url 'ingredients' %}">Ingredients</a>
         <a href="{% url 'recipes' %}">Recipes</a>
         <a href="{% url 'shopping_list' %}">Shopping List</a>
-        {% comment %}
         <a href="{% url 'profile' %}">Profile</a>
-        {% endcomment %}
+        <form action="{% url 'logout' %}" method="post" style="display: inline;">
+          {% csrf_token %}
+          <button type="submit">Logout</button>
+        </form>
       </nav>
     </header>
     <main>
