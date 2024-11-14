@@ -5,9 +5,52 @@
 
 body {
     height: 100vh;
+    background-image: url("/static/images/kitchen-counter-bg.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-attachment: fixed;
+
 }
 
-nav {
+.image-container {
     display: flex;
-    flex-direction: row;
+    justify-content: center;
+    align-items: flex-start;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.recipe-book-image img {
+    height: 90vh;
+    width: auto;
+    max-width: 100%;
+    display: block;
+    margin: 0 auto;
+}
+
+footer {
+    text-align: center;
+}
+
+@media (min-width: 620px) {
+    .image-container {
+        justify-content: center;
+    }
+}
+
+@media (max-width: 619px) {
+    .image-container {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        justify-content: flex-start;
+        padding-top: 10px;
+    }
+
+    .recipe-book-image img {
+        max-width: 100vw;
+        height: auto;
+    }
 }

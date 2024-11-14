@@ -5,7 +5,7 @@ from django.contrib.auth.decorators import login_required
 
 @login_required
 def home(request):
-    return render(request, "recipes/base.html")
+    return render(request, "recipes/homepage.html")
 
 @login_required
 def ingredients(request):
