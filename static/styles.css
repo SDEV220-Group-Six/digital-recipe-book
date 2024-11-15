@@ -1,3 +1,4 @@
+/* App settings */
 * {
     box-sizing: border-box;
     font-family: 'Courier New', Courier, monospace;
@@ -22,6 +23,13 @@ h2 {
     text-decoration: underline;
 }
 
+a {
+    text-decoration: none;
+    color: black;
+}
+
+/* Homepage settings */
+
 .image-container {
     display: flex;
     justify-content: center;
@@ -37,6 +45,8 @@ h2 {
     display: block;
     margin: 0 auto;
 }
+
+/* Ingredients Page settings */
 
 .ingredients-page-container {
     background-color: #345c72;
@@ -89,10 +99,40 @@ h2 {
     padding-left: 100px;
     padding-top: 20px;
     margin-left: 10px;
+    height: 70%;
+}
+
+.right-section-footer {
+    margin-left: 100px;
+    padding-left: 25px;
+    padding-right: 50px;
+}
+
+.right-section-footer img {
+    width: 100%;
+    padding-bottom: 15px;
+}
+
+.right-section-footer #home-button {
+    background: #f47f5e;
+    width: fit-content;
+    margin: auto;
+    border: none;
+    color: black;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 1rem;
+    text-align: center;
+    padding: 10px;
+}
+
+.right-section-footer #home-button:hover {
+    text-decoration: underline;
 }
 
 .left-section-input-form {
     padding: 10px;
+    height: 70%;
 }
 
 .form-group {
@@ -130,6 +170,40 @@ h2 {
 
 .submit-button button:hover {
     text-decoration: underline;
+}
+
+.ingredients-page-container .form-name-area {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}
+
+.ingredients-page-container .form-name-area label {
+    width: 20%;
+}
+
+.ingredients-page-container .form-name-area input {
+    width: 80%;
+}
+
+.ingredients-page-container .form-category-area {
+    height: 250px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-content: flex-start;
+    align-items: baseline;
+}
+
+.ingredients-page-container .form-category-area label {
+    width: 20%;
+}
+
+.ingredients-page-container .form-category-area select {
+    width: 80%;
 }
 
 .upload-area {
@@ -207,6 +281,7 @@ h2 {
     background-color: #b1e4d3;
 }
 
+/* Media queries */
 
 @media (min-width: 620px) {
     .image-container {
