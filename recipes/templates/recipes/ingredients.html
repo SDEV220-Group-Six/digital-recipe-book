@@ -111,7 +111,12 @@
       <div id="recipes" class="nav-item">Recipes</div>
       <div id="shopping-list" class="nav-item">Shopping List</div>
       <div id="profile" class="nav-item">Profile</div>
-      <div id="logout" class="nav-item">Logout</div>
+      <div id="logout" class="nav-item">
+        <form action="{% url 'logout' %}" method="post" style="margin: 0;">
+          {% csrf_token %}
+          <input type="submit" value="Logout" style="all: unset; cursor: pointer;" />
+        </form>
+      </div>
     </div>
   </div>
 {% endblock %}

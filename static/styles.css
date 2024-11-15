@@ -281,6 +281,19 @@ a {
     background-color: #b1e4d3;
 }
 
+.ingredients-page-container .nav-section div input[type="submit"] {
+    all: unset; /* Removes default button styles */
+    cursor: pointer;
+    writing-mode: vertical-rl; /* Matches the nav items */
+    text-align: center;
+    background-color: #f47f5e; /* Matches the Logout nav item color */
+    padding: 5px;
+}
+
+.ingredients-page-container .nav-section div input[type="submit"]:hover {
+    opacity: 0.8; /* Adds hover effect */
+}
+
 /* Media queries */
 
 @media (min-width: 620px) {
