@@ -18,7 +18,7 @@
         </div>
       </div>
       <div class="left-section-input-form">
-        <form action="" method="post" enctype="multipart/form-data">
+        <form id="ingredient-form" action="" method="post" enctype="multipart/form-data">
           {% csrf_token %}
           <div class="form-group">
             <div id="upload-area" class="upload-area">
@@ -34,6 +34,17 @@
           </div>
           <!-- Categories -->
           <div class="form-group">
+            <div class="form-category-area">
+              <label for="category">Category:</label>
+              <select id="category" name="category" required>
+                <option value="" disabled selected>Select a category</option>
+                {% for key, value in category_choices %}
+                  <option value="{{ key }}">{{ value }}</option>
+                {% endfor %}
+              </select>
+            </div>
+          </div>
+          {% comment %} <div class="form-group">
             <div class="form-category-area">
               <label for="category">Category:</label>
               <select id="category" name="category" required>
@@ -73,13 +84,13 @@
                 <option value="alcohol">Alcohol</option>
               </select>
             </div>
-          </div>
+          </div> {% endcomment %}
         </form>
       </div>
       <div class="left-section-footer">
         <!-- Add Ingredient (Submit) Button -->
         <div class="form-group submit-button">
-          <button type="submit">Add Ingredient</button>
+          <button type="submit" form="ingredient-form">Add Ingredient</button>
         </div>
       </div>
     </div>
@@ -91,9 +102,24 @@
         <div class="right-section-header">
           <h3>Saved Ingredients</h3>
         </div>
+        {% comment %} <div class="ingredients-list">
+          {% if ingredients %}
+            <ul>
+              {% for ingredient in ingredients %}
+                <li data-id="{{ ingredient.id }}">
+                  <span>{{ ingredient.name }} ({{ ingredient.category }})</span>
+                  <button class="delete-ingredient" data-id="{{ ingredient.id }}">Remove</button>
+                </li>
+              {% endfor %}
+            </ul>
+          {% else %}
+            <p>No saved ingredients</p>
+          {% endif %}
+        </div> {% endcomment %}
         <div class="ingredients-list">
-          <ul>
-            <li>item</li>
+          <ul id="ingredients-list">
+            <li class="no-ingredients">No saved ingredients</li>
+            <!-- Dynamic content will be inserted here by JavaScript -->
           </ul>
         </div>
       </div>
