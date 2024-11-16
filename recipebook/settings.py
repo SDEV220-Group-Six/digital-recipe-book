@@ -123,11 +123,17 @@ STATICFILES_DIRS = [
     BASE_DIR / 'static',
 ]
 
+# Media files (uploaded images)
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
+
+# Auth redirect folders
 LOGIN_REDIRECT_URL = '/home.html'       
 LOGOUT_REDIRECT_URL = '/login.html'              
 LOGIN_URL = '/login.html'              
