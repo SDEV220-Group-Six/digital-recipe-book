@@ -17,10 +17,15 @@ def home(request):
 
 @login_required
 def ingredients(request):
+    ingredients = Ingredient.objects.filter(created_by=request.user)
+    serialized_ingredients = IngredientSerializer(ingredients, many=True).data
     return render(
         request,
         "recipes/ingredients.html",
-        {"category_choices": Ingredient.CATEGORY_CHOICES},
+        {
+            "category_choices": Ingredient.CATEGORY_CHOICES,
+            "ingredients": serialized_ingredients,
+        },
     )
 
 

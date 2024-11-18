@@ -63,8 +63,19 @@
         </div>
         <div class="ingredients-list">
           <ul id="ingredients-list">
-            <li class="no-ingredients">No saved ingredients</li>
-            <!-- Dynamic content will be inserted here by JavaScript -->
+            {% if ingredients %}
+              {% for ingredient in ingredients %}
+                <li ingredient-id="{{ ingredient.id }}">
+                  <span>{{ ingredient.name }} ({{ ingredient.category }})</span>
+                  {% if ingredient.image_url %}
+                    <img src="{{ ingredient.image_url }}" alt="{{ ingredient.name }}" class="ingredient-image" />
+                  {% endif %}
+                  <button class="delete-ingredient" ingredient-id="{{ ingredient.id }}">Remove</button>
+                </li>
+              {% endfor %}
+            {% else %}
+              <li class="no-ingredients">No saved ingredients</li>
+            {% endif %}
           </ul>
         </div>
       </div>
