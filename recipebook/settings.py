@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "recipes",
-    "rest_framework"
+    "rest_framework",
 ]
 
 MIDDLEWARE = [
@@ -121,12 +121,12 @@ USE_TZ = True
 STATIC_URL = "static/"
 
 STATICFILES_DIRS = [
-    BASE_DIR / 'static',
+    BASE_DIR / "static",
 ]
 
 # Media files (uploaded images)
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = "/media/"
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
@@ -135,7 +135,7 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 
 # Auth redirect folders
-LOGIN_REDIRECT_URL = '/'       
-LOGOUT_REDIRECT_URL = '/login.html'              
-LOGIN_URL = '/login.html'              
-LOGOUT_URL = '/logout.html'   
+LOGIN_REDIRECT_URL = "/"
+LOGOUT_REDIRECT_URL = "/login.html"
+LOGIN_URL = "/login.html"
+LOGOUT_URL = "/logout.html"
