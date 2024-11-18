@@ -213,58 +213,6 @@ if (document.title === "Ingredients") {
 }
 
 
-// if (document.title === "Ingredients") {
-//     document.addEventListener("DOMContentLoaded", function () {
-//         const uploadArea = document.getElementById("upload-area");
-//         const fileInput = document.getElementById("image-upload");
-
-//         uploadArea.addEventListener("click", function () {
-//             fileInput.click();
-//         });
-
-//         fileInput.addEventListener("change", function () {
-//             if (fileInput.files && fileInput.files[0]) {
-//                 const file = fileInput.files[0];
-//                 if (file.type.startsWith("image/")) {
-//                     const reader = new FileReader();
-//                     reader.onload = function (e) {
-//                         uploadArea.style.backgroundImage = `url(${e.target.result})`;
-//                         uploadArea.querySelector("span").style.display = "none";
-//                     };
-//                     reader.readAsDataURL(file);
-//                 }
-//             }
-//         });
-
-//         uploadArea.addEventListener("dragover", function (e) {
-//             e.preventDefault();
-//             uploadArea.classList.add("dragging");
-//         });
-
-//         uploadArea.addEventListener("dragleave", function () {
-//             uploadArea.classList.remove("dragging");
-//         });
-
-//         uploadArea.addEventListener("drop", function (e) {
-//             e.preventDefault();
-//             uploadArea.classList.remove("dragging");
-
-//             if (e.dataTransfer.files.length > 0) {
-//                 const file = e.dataTransfer.files[0];
-//                 if (file.type.startsWith("image/")) {
-//                     const reader = new FileReader();
-//                     reader.onload = function (e) {
-//                         uploadArea.style.backgroundImage = `url(${e.target.result})`;
-//                         uploadArea.querySelector("span").style.display = "none";
-//                     };
-//                     reader.readAsDataURL(file);
-//                     fileInput.files = e.dataTransfer.files;
-//                 }
-//             }
-//         });
-//     });
-// }
-
 // function to set active class on nav item
 document.addEventListener("DOMContentLoaded", function () {
     const navItems = document.querySelectorAll(".nav-section .nav-item");

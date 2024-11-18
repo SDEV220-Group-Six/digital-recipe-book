@@ -44,47 +44,6 @@
               </select>
             </div>
           </div>
-          {% comment %} <div class="form-group">
-            <div class="form-category-area">
-              <label for="category">Category:</label>
-              <select id="category" name="category" required>
-                <option value="" disabled selected>Select a category</option>
-                <!-- Produce -->
-                <option value="vegetable">Vegetable</option>
-                <option value="fruit">Fruit</option>
-                <option value="herb">Herb</option>
-                <!-- Proteins -->
-                <option value="meat">Meat</option>
-                <option value="seafood">Seafood</option>
-                <option value="dairy">Dairy</option>
-                <option value="nut">Nut</option>
-                <option value="seed">Seed</option>
-                <!-- Carbs & Carbohydrates -->
-                <option value="grain">Grain</option>
-                <option value="pasta">Pasta</option>
-                <option value="bread">Bread</option>
-                <option value="cereal">Cereal</option>
-                <!-- Cooking Essentials -->
-                <option value="oil">Oil</option>
-                <option value="spice">Spice</option>
-                <option value="seasoning">Seasoning</option>
-                <!-- Sauces & Condiments -->
-                <option value="sauce">Sauce</option>
-                <option value="condiment">Condiment</option>
-                <option value="dressing">Dressing</option>
-                <!-- Baking & Sweeteners -->
-                <option value="baking">Baking</option>
-                <option value="sweetener">Sweetener</option>
-                <!-- Prepared & Packaged -->
-                <option value="frozen">Frozen</option>
-                <option value="canned">Canned</option>
-                <option value="snack">Snack</option>
-                <!-- Beverages -->
-                <option value="beverage">Beverage</option>
-                <option value="alcohol">Alcohol</option>
-              </select>
-            </div>
-          </div> {% endcomment %}
         </form>
       </div>
       <div class="left-section-footer">
@@ -102,20 +61,6 @@
         <div class="right-section-header">
           <h3>Saved Ingredients</h3>
         </div>
-        {% comment %} <div class="ingredients-list">
-          {% if ingredients %}
-            <ul>
-              {% for ingredient in ingredients %}
-                <li data-id="{{ ingredient.id }}">
-                  <span>{{ ingredient.name }} ({{ ingredient.category }})</span>
-                  <button class="delete-ingredient" data-id="{{ ingredient.id }}">Remove</button>
-                </li>
-              {% endfor %}
-            </ul>
-          {% else %}
-            <p>No saved ingredients</p>
-          {% endif %}
-        </div> {% endcomment %}
         <div class="ingredients-list">
           <ul id="ingredients-list">
             <li class="no-ingredients">No saved ingredients</li>
