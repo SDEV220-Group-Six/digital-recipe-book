@@ -44,10 +44,24 @@ Next three commands are used to install django, check version and run the server
 
 ### Database Migrations
 The first time you start the Django server, there will probably be a message in the console saying that you are missing migrations. To fix that, stop the server (Ctrl+C), run `python3 manage.py migrate` then restart the server.
-If any changes are made to the database models (e.g. new model added and perhaps even new attributes added to existing models), you will probably need to run `python3 manage.py makemigrations <insert_app_name>` to create a migrations file. To "activate" those changes you will neeed to run `python3 manage.py migrate <insert_app_name>` again.
+
+If any changes are made to the database models (e.g. new model added and perhaps even new attributes added to existing models), you will probably need to run `python3 manage.py makemigrations <insert_app_name>` to create a migrations file. To "activate" those changes you will need to run `python3 manage.py migrate <insert_app_name>` again.
 
 #### Project Apps
 Currently the project (`recipebook`) has a single app, called `recipes`. Any migrations will need to be applied to that app. When we eventually create the `shopping-list` app, the above commands regarding migrations will have to be checked/updated.
+
+### Creating Superuser and Users
+Due to the database not being cloned, you will need to create a superuser to be able to login into both the app, as well as in the /admin panel.
+
+`python3 manage.py createsuperuser` (Mac) or `python3 manage.py createsuperuser` (Windows).
+Follow the prompts. As the user will only be created on your local machine, you could create an admin(user) and admin(password) account for easy access. You can do that by typing `y` in the final prompt.
+
+As the application is designed to display ingredients and recipes/shopping lists (eventually) based on the user that created them, it would be a good idea to create different users to test that behavior. That can be done via the admin panel after logging in as a superuser.
+
+Ideally we will also implement groups at some point, so that we would simulate a business using this recipe book. We will probably have to update the queries at that point, but for now different users are sufficient.
+
+#### Adding /media folder
+The application is currently designed to store image files uploaded by users into a /media/ folder. This folder will not be clone as it's on the .gitignore list. To solve this, you will have to create the /media/ folder just below the root (e.g. `digital-recipe-book/media`).
 
 ## Getting Latest Updates From the *main* Branch
 It's possible that while you are working on your branch, changes have been done to main. It is a good idea to get those changes before trying to push your own to GitHub. To do this, run the following commands:
