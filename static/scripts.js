@@ -31,6 +31,93 @@ if (document.title === "Home") {
 }
 
 // ingredients form functions
+document.addEventListener("DOMContentLoaded", function () {
+    console.log("scripts.js is loaded"); // Debugging
+
+    if (document.title === "Ingredients") {
+        console.log("Ingredients page loaded"); // Debugging
+
+        const form = document.querySelector(".left-section-input-form form");
+        const ingredientsList = document.getElementById("ingredients-list");
+        const uploadArea = document.getElementById("upload-area");
+        const fileInput = document.getElementById("image-upload");
+        const nameInput = document.getElementById("name");
+        const categoryInput = document.getElementById("category");
+        const csrfToken = document.querySelector("[name=csrfmiddlewaretoken]").value;
+
+        // Image upload functionality
+        uploadArea.addEventListener("click", function () {
+            fileInput.click();
+        });
+
+        fileInput.addEventListener("change", function () {
+            if (fileInput.files && fileInput.files[0]) {
+                const file = fileInput.files[0];
+                if (file.type.startsWith("image/")) {
+                    const reader = new FileReader();
+                    reader.onload = function (e) {
+                        uploadArea.style.backgroundImage = `url(${e.target.result})`;
+                        uploadArea.querySelector("span").style.display = "none";
+                    };
+                    reader.readAsDataURL(file);
+                }
+            }
+        });
+
+        // Form submission to add ingredient
+        form.addEventListener("submit", function (e) {
+            e.preventDefault();
+
+            const formData = new FormData();
+            formData.append("name", nameInput.value);
+            formData.append("category", categoryInput.value);
+            if (fileInput.files.length > 0) {
+                formData.append("image", fileInput.files[0]);
+            }
+
+            fetch("/recipes/api/ingredients/", {
+                method: "POST",
+                body: formData,
+                headers: {
+                    "X-CSRFToken": csrfToken,
+                },
+            })
+                .then((response) => {
+                    if (!response.ok) {
+                        throw new Error("Failed to add ingredient");
+                    }
+                    return response.json();
+                })
+                .then((data) => {
+                    console.log("Ingredient added:", data);
+
+                    // Remove "No saved ingredients" message
+                    const noIngredientsMessage = ingredientsList.querySelector(".no-ingredients");
+                    if (noIngredientsMessage) {
+                        noIngredientsMessage.remove();
+                    }
+
+                    // Add the new ingredient to the list
+                    const newItem = document.createElement("li");
+                    newItem.setAttribute("ingredient-id", data.id);
+                    newItem.innerHTML = `
+                        <span>${data.name} (${data.category})</span>
+                        <button class="delete-ingredient" ingredient-id="${data.id}">Remove</button>
+                    `;
+                    ingredientsList.appendChild(newItem);
+
+                    // Clear form
+                    form.reset();
+                    uploadArea.style.backgroundImage = "none";
+                    uploadArea.querySelector("span").style.display = "block";
+                })
+                .catch((error) => {
+                    console.error("Error:", error);
+                    alert("Failed to add ingredient.");
+                });
+        });
+    }
+});
 // if (document.title === "Ingredients") {
 //     document.addEventListener("DOMContentLoaded", function () {
 //         console.log("DOM fully loaded and parsed"); // Debugging
