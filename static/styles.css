@@ -68,6 +68,11 @@ a {
     margin-bottom: 10px;
 }
 
+.left-section-header img {
+    width: 100%;
+    padding-bottom: 15px;
+}
+
 .ingredients-page-container .left-section .left-section-rolls {
     float: right;
     max-height: 100%;
@@ -100,6 +105,39 @@ a {
     padding-top: 20px;
     margin-left: 10px;
     height: 70%;
+}
+
+#ingredients-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+#ingredients-list li span {
+    display: inline-block;
+    max-width: 90%;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    vertical-align: middle;
+}
+
+#ingredients-list li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-right: 25px;
+    padding-top: 2px;
+    padding-bottom: 2px;
+}
+
+#ingredients-list li:hover {
+    background-color: #b1e4d3;
+}
+
+#ingredients-list li button {
+    flex-shrink: 0;
+    margin-left: 10px;
 }
 
 .right-section-footer {
@@ -282,16 +320,16 @@ a {
 }
 
 .ingredients-page-container .nav-section div input[type="submit"] {
-    all: unset; /* Removes default button styles */
+    all: unset;
     cursor: pointer;
-    writing-mode: vertical-rl; /* Matches the nav items */
+    writing-mode: vertical-rl;
     text-align: center;
-    background-color: #f47f5e; /* Matches the Logout nav item color */
+    background-color: #f47f5e;
     padding: 5px;
 }
 
 .ingredients-page-container .nav-section div input[type="submit"]:hover {
-    opacity: 0.8; /* Adds hover effect */
+    opacity: 0.8;
 }
 
 /* Media queries */
@@ -315,15 +353,5 @@ a {
     .recipe-book-image img {
         max-width: 100vw;
         height: auto;
-    }
-}
-
-@media (max-width: 735px) {
-    .ingredients-page-container {
-        flex-direction: column;
-    }
-
-    .ingredients-page-container .right-section {
-        margin-left: 10px;
     }
 }
