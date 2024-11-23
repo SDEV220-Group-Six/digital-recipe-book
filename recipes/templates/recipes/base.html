@@ -11,17 +11,9 @@
       {% endblock %}
     </title>
     <link rel="stylesheet" href="{% static 'styles.css' %}" />
+    <script src="{% static 'scripts.js' %}"></script>
   </head>
   <body>
-    <header>
-      <h1>Digital Recipe Book</h1>
-      <nav>
-        <a href="{% url 'home' %}">Home</a>
-        {% comment %} <a href="{% url 'recipe_list' %}">Recipes</a>
-        <a href="{% url 'shopping_list' %}">Shopping List</a>
-        <a href="{% url 'profile' %}">Profile</a> {% endcomment %}
-      </nav>
-    </header>
     <main>
       {% block content %}
 
