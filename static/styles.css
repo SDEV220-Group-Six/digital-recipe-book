@@ -28,6 +28,55 @@ a {
     color: black;
 }
 
+/* Login page settings */
+
+.login-page-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    padding-top: 15vh;
+}
+
+.login-page-form-container {
+    background: whitesmoke;
+    border-radius: 10px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    width: 100%;
+    max-width: 400px;
+}
+
+#login-form {
+    width: 100%;
+}
+
+#login-form input,
+label,
+button {
+    width: 100%;
+    margin: 10px 0;
+    padding: 10px;
+}
+
+#login-form button {
+    background-color: #8fbb45;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#login-form button:hover {
+    opacity: 0.9;
+}
+
 /* Homepage settings */
 
 .image-container {
@@ -136,7 +185,15 @@ a {
 }
 
 #ingredients-list li button {
+    all: unset;
     flex-shrink: 0;
+    background-color: #f47f5e;
+    color: black;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    cursor: pointer;
+    font-size: 0.9rem;
     margin-left: 10px;
 }
 
