@@ -23,6 +23,7 @@
           <div class="form-group">
             <div id="upload-area" class="upload-area">
               <span>Upload Image (optional)</span>
+              <img id="preview-image" src="" alt="Preview Image" style="display: none; max-width: 100%; height: auto; margin-top: 10px;" />
               <input type="file" id="image-upload" name="image" accept="image/*" style="display: none;" />
             </div>
           </div>
@@ -92,7 +93,9 @@
       <div id="ingredients" class="nav-item active">Ingredients</div>
       <div id="recipes" class="nav-item">Recipes</div>
       <div id="shopping-list" class="nav-item">Shopping List</div>
-      <div id="profile" class="nav-item"><a href="{% url 'profile' %}">Profile</a></div>
+      <div id="profile" class="nav-item">
+        <a href="{% url 'profile' %}">Profile</a>
+      </div>
       <div id="logout" class="nav-item">
         <form action="{% url 'logout' %}" method="post" style="margin: 0;">
           {% csrf_token %}

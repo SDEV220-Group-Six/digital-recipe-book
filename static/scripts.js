@@ -51,16 +51,23 @@ document.addEventListener("DOMContentLoaded", function () {
         });
 
         fileInput.addEventListener("change", function () {
+            const previewImage = document.getElementById("preview-image");
+
             if (fileInput.files && fileInput.files[0]) {
                 const file = fileInput.files[0];
                 if (file.type.startsWith("image/")) {
                     const reader = new FileReader();
                     reader.onload = function (e) {
-                        uploadArea.style.backgroundImage = `url(${e.target.result})`;
+                        previewImage.src = e.target.result;
                         uploadArea.querySelector("span").style.display = "none";
+                        previewImage.style.display = "block";
                     };
                     reader.readAsDataURL(file);
                 }
+            } else {
+                // Hide the preview image if no file is selected
+                previewImage.style.display = "none";
+                uploadArea.querySelector("span").style.display = "block";
             }
         });
 
@@ -110,6 +117,11 @@ document.addEventListener("DOMContentLoaded", function () {
                     form.reset();
                     uploadArea.style.backgroundImage = "none";
                     uploadArea.querySelector("span").style.display = "block";
+
+                    //Clear the image preview
+                    const previewImage = document.getElementById("preview-image");
+                    previewImage.src = "";
+                    previewImage.style.display = "none";
                 })
                 .catch((error) => {
                     console.error("Error:", error);
@@ -159,6 +171,8 @@ document.addEventListener("DOMContentLoaded", function () {
                 });
         }
         function populateFormForEditing(ingredientId) {
+            const previewImage = document.getElementById("preview-image");
+
             fetch(`/recipes/api/ingredients/${ingredientId}/`, {
                 method: "GET",
                 headers: {
@@ -175,14 +189,17 @@ document.addEventListener("DOMContentLoaded", function () {
                     nameInput.value = data.name;
                     categoryInput.value = data.category;
 
-                    if (data.image_url) {
-                        uploadArea.style.backgroundImage = `url(${data.image_url})`;
+                    if (data.image) {
+                        previewImage.src = data.image;
                         uploadArea.querySelector("span").style.display = "none";
+                        previewImage.style.display = "block";
                     } else {
-                        uploadArea.style.backgroundImage = "none";
+                        previewImage.src = "";
+                        previewImage.style.display = "none";
                         uploadArea.querySelector("span").style.display = "block";
                     }
 
+                    // Highlight the selected ingredient
                     document
                         .querySelectorAll("#ingredients-list li")
                         .forEach((li) => li.classList.remove("active"));
