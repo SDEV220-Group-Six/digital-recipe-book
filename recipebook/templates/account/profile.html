@@ -21,7 +21,7 @@
         <form id="notes-form" action="" method="post">
           {% csrf_token %}
           <div class="form-group">
-            <textarea id="user-notes" name="notes" placeholder="Write your notes here..."></textarea>
+            <textarea id="user-notes" name="notes" placeholder="Write your notes here...">{{ note.content }}</textarea>
           </div>
         </form>
       </div>
