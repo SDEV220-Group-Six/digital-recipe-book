@@ -19,6 +19,7 @@
       </div>
       <div class="left-section-input-form">
         <form id="ingredient-form" action="" method="post" enctype="multipart/form-data">
+          <input type="hidden" id="ingredient-id" name="ingredient-id" value="" />
           {% csrf_token %}
           <div class="form-group">
             <div id="upload-area" class="upload-area">
@@ -48,9 +49,9 @@
         </form>
       </div>
       <div class="left-section-footer">
-        <!-- Add Ingredient (Submit) Button -->
+        <!-- Save Ingredient (Submit) Button -->
         <div class="form-group submit-button">
-          <button type="submit" form="ingredient-form">Add Ingredient</button>
+          <button type="submit" form="ingredient-form">Save Ingredient</button>
         </div>
       </div>
     </div>

@@ -76,14 +76,22 @@ document.addEventListener("DOMContentLoaded", function () {
             e.preventDefault();
 
             const formData = new FormData();
+            const ingredientId = document.getElementById("ingredient-id").value;
+
             formData.append("name", nameInput.value);
             formData.append("category", categoryInput.value);
             if (fileInput.files.length > 0) {
                 formData.append("image", fileInput.files[0]);
             }
 
-            fetch("/recipes/api/ingredients/", {
-                method: "POST",
+            // check if editing or creating ingredient
+            const url = ingredientId
+                ? `/recipes/api/ingredients/${ingredientId}/`
+                : "/recipes/api/ingredients/";
+            const method = ingredientId ? "PUT" : "POST";
+
+            fetch(url, {
+                method: method,
                 body: formData,
                 headers: {
                     "X-CSRFToken": csrfToken,
@@ -91,12 +99,12 @@ document.addEventListener("DOMContentLoaded", function () {
             })
                 .then((response) => {
                     if (!response.ok) {
-                        throw new Error("Failed to add ingredient");
+                        throw new Error(`Failed to ${method === "PUT" ? "update" : "create"} ingredient`);
                     }
                     return response.json();
                 })
                 .then((data) => {
-                    console.log("Ingredient added:", data);
+                    console.log("Ingredient saved:", data);
 
                     // Remove "No saved ingredients" message
                     const noIngredientsMessage = ingredientsList.querySelector(".no-ingredients");
@@ -105,16 +113,27 @@ document.addEventListener("DOMContentLoaded", function () {
                     }
 
                     // Add the new ingredient to the list
-                    const newItem = document.createElement("li");
-                    newItem.setAttribute("ingredient-id", data.id);
-                    newItem.innerHTML = `
-                        <span>${data.name} (${data.category})</span>
-                        <button class="delete-ingredient" ingredient-id="${data.id}">Remove</button>
-                    `;
-                    ingredientsList.appendChild(newItem);
+                    let existingItem = ingredientsList.querySelector(`li[ingredient-id="${data.id}"]`);
+                    if (existingItem) {
+                        // Update the existing ingredient in the list
+                        existingItem.innerHTML = `
+                    <span>${data.name} (${data.category})</span>
+                    <button class="delete-ingredient" ingredient-id="${data.id}">Remove</button>
+                `;
+                    } else {
+                        // Add the new ingredient to the list
+                        const newItem = document.createElement("li");
+                        newItem.setAttribute("ingredient-id", data.id);
+                        newItem.innerHTML = `
+                    <span>${data.name} (${data.category})</span>
+                    <button class="delete-ingredient" ingredient-id="${data.id}">Remove</button>
+                `;
+                        ingredientsList.appendChild(newItem);
+                    }
 
                     // Clear form
                     form.reset();
+                    document.getElementById("ingredient-id").value = "";
                     uploadArea.style.backgroundImage = "none";
                     uploadArea.querySelector("span").style.display = "block";
 
@@ -161,6 +180,12 @@ document.addEventListener("DOMContentLoaded", function () {
                     }
                     ingredientsList.removeChild(listItem);
 
+                    // If the deleted ingredient was selected, clear the form
+                    const currentIngredientId = document.getElementById("ingredient-id").value;
+                    if (currentIngredientId === ingredientId) {
+                        clearForm();
+                    }
+
                     if (!ingredientsList.children.length) {
                         ingredientsList.innerHTML = '<li class="no-ingredients">No saved ingredients</li>';
                     }
@@ -188,6 +213,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 .then((data) => {
                     nameInput.value = data.name;
                     categoryInput.value = data.category;
+                    document.getElementById("ingredient-id").value = data.id;
 
                     if (data.image) {
                         previewImage.src = data.image;
@@ -211,6 +237,25 @@ document.addEventListener("DOMContentLoaded", function () {
                     console.error("Error:", error);
                     alert("Failed to load ingredient details.");
                 });
+        }
+
+        // Function to clear the form fields
+        function clearForm() {
+            nameInput.value = ""; // Clear name field
+            categoryInput.value = ""; // Clear category dropdown
+            fileInput.value = ""; // Clear file input
+            document.getElementById("ingredient-id").value = ""; // Clear hidden ingredient ID
+
+            // Clear the image preview
+            const previewImage = document.getElementById("preview-image");
+            previewImage.src = "";
+            previewImage.style.display = "none";
+
+            // Restore the upload area placeholder
+            uploadArea.querySelector("span").style.display = "block";
+
+            // Remove active state from any selected list item
+            document.querySelectorAll("#ingredients-list li").forEach((li) => li.classList.remove("active"));
         }
     }
 });
