@@ -156,6 +156,11 @@ button {
     height: 70%;
 }
 
+.ingredients-list {
+    overflow: scroll;
+    max-height: 90%;
+}
+
 #ingredients-list {
     list-style-type: none;
     padding: 0;
