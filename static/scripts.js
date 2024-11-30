@@ -71,13 +71,41 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         });
 
+        async function isDuplicateIngredient(name, ingredientId = null) {
+            try {
+                const response = await fetch("/recipes/api/ingredients/");
+                if (!response.ok) {
+                    throw new Error("Failed to fetch ingredients.");
+                }
+
+                const ingredients = await response.json();
+
+                // Check for duplicates and exclude the current ingredient ID
+                return ingredients.some(
+                    (ingredient) =>
+                        ingredient.name.toLowerCase() === name.toLowerCase() &&
+                        ingredient.id !== parseInt(ingredientId)
+                );
+            } catch (error) {
+                console.error("Error checking duplicate ingredient:", error);
+                return false;
+            }
+        }
+
         // Form submission to add ingredient
-        form.addEventListener("submit", function (e) {
+        form.addEventListener("submit", async function (e) {
             e.preventDefault();
 
-            const formData = new FormData();
+            const ingredientName = nameInput.value.trim();
             const ingredientId = document.getElementById("ingredient-id").value;
 
+            const isDuplicate = await isDuplicateIngredient(ingredientName, ingredientId);
+            if (isDuplicate) {
+                alert("An ingredient with this name already exists! Please choose a different name.");
+                return;
+            }
+
+            const formData = new FormData();
             formData.append("name", nameInput.value);
             formData.append("category", categoryInput.value);
             if (fileInput.files.length > 0) {
