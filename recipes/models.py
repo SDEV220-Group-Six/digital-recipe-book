@@ -1,6 +1,6 @@
 from django.db import models
 from django.conf import settings
-from django.utils import timezone
+from django.contrib.auth.models import User
 
 # Create your models here.
 
@@ -48,3 +48,12 @@ class Ingredient(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class Note(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="note")
+    content = models.TextField(blank=True)
+    last_updated = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f"Notes for {self.user.username}"

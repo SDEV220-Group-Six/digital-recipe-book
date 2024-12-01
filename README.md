@@ -4,7 +4,7 @@ All your recipes in one place!
 After git clone, the root folder will be named `digital-recipe-book`.
 
 ## URL
-`to be updated`
+`https://sdevgroupsix.pythonanywhere.com`
 
 ## Cloning the Project
 Open a terminal and navigate to the (parent) folder where you want to save the code. Run the following command:
@@ -53,7 +53,7 @@ Currently the project (`recipebook`) has a single app, called `recipes`. Any mig
 ### Creating Superuser and Users
 Due to the database not being cloned, you will need to create a superuser to be able to login into both the app, as well as in the /admin panel.
 
-`python3 manage.py createsuperuser` (Mac) or `python3 manage.py createsuperuser` (Windows).
+`python3 manage.py createsuperuser` (Mac) or `python manage.py createsuperuser` (Windows).
 Follow the prompts. As the user will only be created on your local machine, you could create an admin(user) and admin(password) account for easy access. You can do that by typing `y` in the final prompt.
 
 As the application is designed to display ingredients and recipes/shopping lists (eventually) based on the user that created them, it would be a good idea to create different users to test that behavior. That can be done via the admin panel after logging in as a superuser.

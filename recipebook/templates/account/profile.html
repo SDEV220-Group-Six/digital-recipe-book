@@ -1,11 +1,75 @@
 {% extends 'recipes/base.html' %}
+{% load static %}
 
 {% block title %}
   Profile
 {% endblock %}
 
 {% block content %}
-  <h2>Your Profile</h2>
-  <p>Welcome, {{ user.username }}!</p>
-  <p>Email: {{ user.email }}</p>
+  <div class="ingredients-page-container">
+    <div class="left-section">
+      <div class="left-section-rolls">
+        <img src="{% static 'images/left-section-rolls.svg' %}" alt="Divider" />
+      </div>
+      <div class="left-section-header">
+        <h2>Welcome, {{ user.username }}!</h2>
+        <div class="decorator-image-left">
+          <img src="{% static 'images/decorator-image-left.svg' %}" alt="Decorator" />
+        </div>
+      </div>
+      <div class="notes-container">
+        <form id="notes-form" action="" method="post">
+          {% csrf_token %}
+          <div class="form-group">
+            <textarea id="user-notes" name="notes" placeholder="Write your notes here...">{{ note.content }}</textarea>
+          </div>
+        </form>
+      </div>
+      <div class="left-section-footer">
+        <div class="form-group submit-button">
+          <button type="submit" form="notes-form">Save Notes</button>
+        </div>
+      </div>
+    </div>
+    <div class="right-section">
+      <div class="right-section-rolls">
+        <img src="{% static 'images/right-section-rolls.svg' %}" alt="Divider" />
+      </div>
+      <div class="right-section-content">
+        <div class="right-section-header">
+          <h3>Your Profile</h3>
+        </div>
+        <p>Username: {{ user.username }}</p>
+        <p>Email: {{ user.email }}</p>
+        <p>Full Name: {{ user.first_name }} {{ user.last_name }}</p>
+        <p>Account Created: {{ user.date_joined|date:'F j, Y' }}</p>
+        <p>Last Login: {{ user.last_login|date:'F j, Y, g:i a' }}</p>
+        {% if user.is_staff %}
+          <p>Staff Member: {{ user.is_staff|yesno:'Yes,No' }}</p>
+        {% endif %}
+      </div>
+      <div class="right-section-footer">
+        <div class="decorator-image-right">
+          <img src="{% static 'images/decorator-image-right.svg' %}" alt="Decorator" />
+        </div>
+        <div id="home-button" class="home-button">
+          <a href="{% url 'home' %}">Home</a>
+        </div>
+      </div>
+    </div>
+    <div class="nav-section">
+      <div id="ingredients" class="nav-item">
+        <a href="{% url 'ingredients' %}">Ingredients</a>
+      </div>
+      <div id="recipes" class="nav-item">Recipes</div>
+      <div id="shopping-list" class="nav-item">Shopping List</div>
+      <div id="profile" class="nav-item active">Profile</div>
+      <div id="logout" class="nav-item">
+        <form action="{% url 'logout' %}" method="post" style="margin: 0;">
+          {% csrf_token %}
+          <input type="submit" value="Logout" style="all: unset; cursor: pointer;" />
+        </form>
+      </div>
+    </div>
+  </div>
 {% endblock %}
