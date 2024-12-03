@@ -28,7 +28,7 @@ urlpatterns = [
     path("login.html", views.RecipeBookLoginView.as_view(), name="login"),
     path("logout.html", views.RecipeBookLogoutView.as_view(), name="logout"),
     path("profile/", views.profile, name="profile"),
-    path("recipes/", include("recipes.urls")),
+    path("recipebook/", include("recipes.urls")),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

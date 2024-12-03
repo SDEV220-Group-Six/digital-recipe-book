@@ -1,0 +1,12 @@
+{% extends 'recipes/base.html' %}
+{% block content %}
+  <h2>{{ recipe.id|default:'New Recipe' }}</h2>
+
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Save Recipe</button>
+  </form>
+
+  <a href="{% url 'recipes' %}">Back to Recipes</a>
+{% endblock %}
