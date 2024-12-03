@@ -31,7 +31,11 @@ def ingredients(request):
 
 @login_required
 def recipes(request):
-    return render(request, "recipes/recipes.html")
+    return render(request, "recipes/recipe_list.html")
+
+@login_required
+def recipe_detail(request):
+    return render(request, "recipes/recipe_detail.html")
 
 
 @login_required

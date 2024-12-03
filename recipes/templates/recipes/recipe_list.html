@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block title %}
-  Shopping List
+  Recipe
 {% endblock %}
 
 {% block content %}
@@ -12,7 +12,7 @@
         <img src="{% static 'images/left-section-rolls.svg' %}" alt="Divider" />
       </div>
       <div class="left-section-header">
-        <h2>Shopping List</h2>
+        <h2>Recipes</h2>
         <div class="decorator-image-left">
           <img src="{% static 'images/decorator-image-left.svg' %}" alt="Decorator" />
         </div>
@@ -50,7 +50,7 @@
       <div class="left-section-footer">
         <!-- Add Ingredient (Submit) Button -->
         <div class="form-group submit-button">
-          <button type="submit" form="ingredient-form">Add Item</button>
+          <button type="submit" form="ingredient-form">Add Recipe</button>
         </div>
       </div>
     </div>
@@ -60,7 +60,7 @@
       </div>
       <div class="right-section-content">
         <div class="right-section-header">
-          <h3>Shopping List</h3>
+          <h3>Saved Recipes</h3>
         </div>
         <div class="ingredients-list">
           <ul id="ingredients-list">
@@ -75,12 +75,15 @@
                 </li>
               {% endfor %}
             {% else %}
-              <li class="no-ingredients">Shopping list is empty</li>
+              <li class="no-ingredients">No saved recipes</li>
             {% endif %}
           </ul>
         </div>
       </div>
       <div class="right-section-footer">
+        <div id="home-button" class="home-button">
+          <a href="{% url 'recipe_detail' %}">Recipe Details</a>
+        </div>        
         <div class="decorator-image-right">
           <img src="{% static 'images/decorator-image-right.svg' %}" alt="Decorator" />
         </div>
@@ -93,10 +96,10 @@
       <div id="ingredients" class="nav-item">
         <a href="{% url 'ingredients' %}">Ingredients</a>
       </div>
-      <div id="recipes" class="nav-item">
-        <a href="{% url 'recipes' %}">Recipes</a>
+      <div id="recipes" class="nav-item active">Recipes</div>
+      <div id="shopping-list" class="nav-item">
+        <a href="{% url 'shopping-list' %}">Shopping List</a>
       </div>
-      <div id="shopping-list" class="nav-item active">Shopping List</div>
       <div id="profile" class="nav-item">
         <a href="{% url 'profile' %}">Profile</a>
       </div>
