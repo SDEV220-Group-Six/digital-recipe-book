@@ -91,8 +91,12 @@
     </div>
     <div class="nav-section">
       <div id="ingredients" class="nav-item active">Ingredients</div>
-      <div id="recipes" class="nav-item">Recipes</div>
-      <div id="shopping-list" class="nav-item">Shopping List</div>
+      <div id="recipes" class="nav-item">
+        <a href="{% url 'recipes' %}">Recipes</a>
+      </div>
+      <div id="shopping-list" class="nav-item">
+        <a href="{% url 'shopping-list' %}">Shopping List</a>
+      </div>
       <div id="profile" class="nav-item">
         <a href="{% url 'profile' %}">Profile</a>
       </div>
