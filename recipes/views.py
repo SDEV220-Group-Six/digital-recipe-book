@@ -33,6 +33,10 @@ def ingredients(request):
 def recipes(request):
     return render(request, "recipes/recipe_list.html")
 
+@login_required
+def recipe_detail(request):
+    return render(request, "recipes/recipe_detail.html")
+
 
 @login_required
 def shopping_list(request):
