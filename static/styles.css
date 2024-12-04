@@ -525,9 +525,8 @@ button {
 }
 
 .recipe-detail-ingredients-list .ingredients-list li {
-    display: grid;
-    grid-template-columns: 1fr auto auto auto;
-    align-items: center;
+    display: grid !important;
+    grid-template-columns: 1.5fr 1fr auto auto !important;
     gap: 10px;
     padding: 10px;
 }
