@@ -443,7 +443,7 @@ button {
 
 .recipes-list {
     overflow: scroll;
-    max-height: 90%;
+    max-height: 80%;
 }
 
 #recipes-list {
