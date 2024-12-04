@@ -65,9 +65,6 @@ class Recipe(models.Model):
     )  # Timestamp when the recipe was created
 
     def get_ingredients(self):
-        """
-        Fetch all ingredients for this recipe via RecipeIngredient.
-        """
         return self.recipe_ingredients.select_related("ingredient").all()
 
     def __str__(self):

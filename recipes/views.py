@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.db import models
+from django.http import JsonResponse
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
@@ -105,6 +106,36 @@ def add_ingredient_to_recipe(request, recipe_id):
     return render(
         request, "recipes/add_ingredient_form.html", {"form": form, "recipe": recipe}
     )
+
+
+@login_required
+def recipe_delete(request, recipe_id):
+    if request.method == "POST":
+        try:
+            recipe = Recipe.objects.get(id=recipe_id, created_by=request.user)
+            recipe.delete()
+            return JsonResponse({"message": "Recipe deleted successfully"}, status=204)
+        except Recipe.DoesNotExist:
+            return JsonResponse({"error": "Recipe not found"}, status=404)
+    return JsonResponse({"error": "Invalid request method"}, status=400)
+
+
+@login_required
+def delete_recipe_ingredient(request, recipe_id, ingredient_id):
+    if request.method == "POST":
+        try:
+            recipe_ingredient = RecipeIngredient.objects.get(
+                recipe_id=recipe_id,
+                ingredient_id=ingredient_id,
+                recipe__created_by=request.user,
+            )
+            recipe_ingredient.delete()
+            return JsonResponse(
+                {"message": "Ingredient removed from recipe"}, status=204
+            )
+        except RecipeIngredient.DoesNotExist:
+            return JsonResponse({"error": "Ingredient not found in recipe"}, status=404)
+    return JsonResponse({"error": "Invalid request method"}, status=400)
 
 
 @login_required

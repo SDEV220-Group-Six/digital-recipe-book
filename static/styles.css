@@ -232,7 +232,7 @@ button {
 
 .left-section-input-form {
     padding: 10px;
-    height: 70%;
+    max-height: 60%;
 }
 
 .form-group {
@@ -360,6 +360,11 @@ button {
     padding: 5px;
 }
 
+#ingredient-form {
+    overflow: hidden;
+    max-height: 100%;
+}
+
 .nav-section .nav-item#ingredients {
     background-color: #b1e4d3;
 }
@@ -438,7 +443,7 @@ button {
 
 .recipes-list {
     overflow: scroll;
-    max-height: 90%;
+    max-height: 80%;
 }
 
 #recipes-list {
@@ -481,6 +486,80 @@ button {
     cursor: pointer;
     font-size: 0.9rem;
     margin-left: 10px;
+}
+
+#recipes-list li a {
+    width: 100%;
+}
+
+.recipe-detail-left-section-footer {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 30px;
+    margin-top: 25px;
+}
+
+.recipe-detail-left-section-footer div {
+    display: block;
+    padding: 5px;
+    background-color: #e7c851;
+}
+
+.recipe-instructions {
+    max-height: 80%;
+    overflow: scroll;
+}
+
+/* Recipe Details page settings */
+
+.recipe-detail-ingredients-list {
+    padding: 20px;
+    height: 45%;
+}
+
+.recipe-detail-ingredients-list h3 {
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.recipe-detail-ingredients-list .ingredients-list li {
+    display: grid !important;
+    grid-template-columns: 1.5fr 1fr auto auto !important;
+    gap: 10px;
+    padding: 10px;
+}
+
+.recipe-detail-ingredients-list .ingredients-list li span {
+    font-size: 14px;
+    text-align: left;
+}
+
+.recipe-detail-ingredients-list .ingredients-list li span:first-child {
+    font-weight: bold;
+    text-align: left;
+}
+
+.recipe-detail-ingredients-list .ingredients-list li span:nth-child(2),
+.recipe-detail-ingredients-list .ingredients-list li span:nth-child(3) {
+    text-align: center;
+}
+
+.recipe-detail-ingredients-list .ingredients-list li button {
+    justify-self: end;
+    background-color: #f47f5e;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    color: white;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.recipe-detail-ingredients-list .ingredients-list li button:hover {
+    background-color: #d45c3c;
 }
 
 /* Profile page settings */
