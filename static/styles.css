@@ -483,6 +483,10 @@ button {
     margin-left: 10px;
 }
 
+#recipes-list li a {
+    width: 100%;
+}
+
 /* Profile page settings */
 
 .notes-container {
