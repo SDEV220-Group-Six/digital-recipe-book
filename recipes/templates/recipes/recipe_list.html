@@ -1,0 +1,77 @@
+{% extends 'recipes/base.html' %}
+{% load static %}
+
+{% block title %}
+  Recipe
+{% endblock %}
+
+{% block content %}
+  <div class="ingredients-page-container">
+    <div class="left-section">
+      <div class="left-section-rolls">
+        <img src="{% static 'images/left-section-rolls.svg' %}" alt="Divider" />
+      </div>
+      <div class="left-section-header">
+        <h2>Recipes</h2>
+        <div class="decorator-image-left">
+          <img src="{% static 'images/decorator-image-left.svg' %}" alt="Decorator" />
+        </div>
+      </div>
+      <div class="recipes-list">
+        <ul id="recipes-list">
+          {% if recipes %}
+            {% for recipe in recipes %}
+              <li recipe-id="{{ recipe.id }}">
+                <a href="{% url 'recipe_detail' recipe.id %}">{{ recipe.name }}</a>
+                <button class="delete-ingredient" recipe-id="{{ recipe.id }}">Remove</button>
+              </li>
+            {% endfor %}
+          {% else %}
+            <li class="no-ingredients">No saved recipes</li>
+          {% endif %}
+        </ul>
+      </div>
+      <div class="left-section-footer"></div>
+    </div>
+    <div class="right-section">
+      <div class="right-section-rolls">
+        <img src="{% static 'images/right-section-rolls.svg' %}" alt="Divider" />
+      </div>
+      <div class="right-section-content">
+        <div class="right-section-header"></div>
+        <div class="recipe-image-container">
+          <img src="{% static 'images/burritos.svg' %}" alt="Burritos" />
+        </div>
+      </div>
+      <div class="right-section-footer">
+        <div id="create-recipe-button">
+          <a href="{% url 'recipe_create' %}" class="btn btn-primary">Create a New Recipe</a>
+        </div>
+        <div class="decorator-image-right">
+          <img src="{% static 'images/decorator-image-right.svg' %}" alt="Decorator" />
+        </div>
+        <div id="home-button" class="home-button">
+          <a href="{% url 'home' %}">Home</a>
+        </div>
+      </div>
+    </div>
+    <div class="nav-section">
+      <div id="ingredients" class="nav-item">
+        <a href="{% url 'ingredients' %}">Ingredients</a>
+      </div>
+      <div id="recipes" class="nav-item active">Recipes</div>
+      <div id="shopping-list" class="nav-item">
+        <a href="{% url 'shopping-list' %}">Shopping List</a>
+      </div>
+      <div id="profile" class="nav-item">
+        <a href="{% url 'profile' %}">Profile</a>
+      </div>
+      <div id="logout" class="nav-item">
+        <form action="{% url 'logout' %}" method="post" style="margin: 0;">
+          {% csrf_token %}
+          <input type="submit" value="Logout" style="all: unset; cursor: pointer;" />
+        </form>
+      </div>
+    </div>
+  </div>
+{% endblock %}

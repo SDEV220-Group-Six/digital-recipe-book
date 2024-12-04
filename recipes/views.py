@@ -33,7 +33,7 @@ def ingredients(request):
 @login_required
 def recipes(request):
     recipes = Recipe.objects.filter(created_by=request.user)
-    return render(request, "recipes/recipes.html", {"recipes": recipes})
+    return render(request, "recipes/recipe_list.html", {"recipes": recipes})
 
 
 @login_required

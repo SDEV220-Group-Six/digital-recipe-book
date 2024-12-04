@@ -405,6 +405,77 @@ button {
     opacity: 0.8;
 }
 
+/* Recipes Page settings */
+
+#create-recipe-button {
+    background: #8fbb45;
+    width: fit-content;
+    margin: auto;
+    border: none;
+    color: black;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 1rem;
+    text-align: center;
+    padding: 5px;
+    margin-bottom: 25px;
+}
+
+.recipe-image-container {
+    padding-top: 25px;
+    width: 90%;
+    max-height: 90%;
+    overflow: hidden;
+    margin: auto;
+}
+
+.recipes-list {
+    overflow: scroll;
+    max-height: 90%;
+}
+
+#recipes-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+#recipes-list li span {
+    display: inline-block;
+    max-width: 90%;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    vertical-align: middle;
+}
+
+#recipes-list li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-right: 25px;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    padding-left: 25px;
+}
+
+#recipes-list li:hover {
+    background-color: #b1e4d3;
+}
+
+#recipes-list li button {
+    all: unset;
+    flex-shrink: 0;
+    background-color: #f47f5e;
+    color: black;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    margin-left: 10px;
+}
+
 /* Profile page settings */
 
 .notes-container {
@@ -426,6 +497,11 @@ button {
 
 .right-section-content p {
     padding: 10px;
+}
+
+.left-section-content {
+    width: 90%;
+    height: 90%;
 }
 
 /* Media queries */

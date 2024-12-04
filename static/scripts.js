@@ -73,7 +73,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         async function isDuplicateIngredient(name, ingredientId = null) {
             try {
-                const response = await fetch("/recipes/api/ingredients/");
+                const response = await fetch("/recipebook/api/ingredients/");
                 if (!response.ok) {
                     throw new Error("Failed to fetch ingredients.");
                 }
@@ -114,8 +114,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
             // check if editing or creating ingredient
             const url = ingredientId
-                ? `/recipes/api/ingredients/${ingredientId}/`
-                : "/recipes/api/ingredients/";
+                ? `/recipebook/api/ingredients/${ingredientId}/`
+                : "/recipebook/api/ingredients/";
             const method = ingredientId ? "PUT" : "POST";
 
             fetch(url, {
@@ -196,7 +196,7 @@ document.addEventListener("DOMContentLoaded", function () {
         });
 
         function deleteIngredient(ingredientId, listItem) {
-            fetch(`/recipes/api/ingredients/${ingredientId}/`, {
+            fetch(`/recipebook/api/ingredients/${ingredientId}/`, {
                 method: "DELETE",
                 headers: {
                     "X-CSRFToken": csrfToken,
@@ -226,7 +226,7 @@ document.addEventListener("DOMContentLoaded", function () {
         function populateFormForEditing(ingredientId) {
             const previewImage = document.getElementById("preview-image");
 
-            fetch(`/recipes/api/ingredients/${ingredientId}/`, {
+            fetch(`/recipebook/api/ingredients/${ingredientId}/`, {
                 method: "GET",
                 headers: {
                     "X-CSRFToken": csrfToken,

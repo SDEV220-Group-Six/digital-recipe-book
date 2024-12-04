@@ -63,6 +63,7 @@
         <div class="right-section-header">
           <h3>Saved Ingredients</h3>
         </div>
+        
         <div class="ingredients-list">
           <ul id="ingredients-list">
             {% if ingredients %}
@@ -80,6 +81,7 @@
             {% endif %}
           </ul>
         </div>
+        
       </div>
       <div class="right-section-footer">
         <div class="decorator-image-right">
@@ -92,8 +94,12 @@
     </div>
     <div class="nav-section">
       <div id="ingredients" class="nav-item active">Ingredients</div>
-      <div id="recipes" class="nav-item">Recipes</div>
-      <div id="shopping-list" class="nav-item">Shopping List</div>
+      <div id="recipes" class="nav-item">
+        <a href="{% url 'recipes' %}">Recipes</a>
+      </div>
+      <div id="shopping-list" class="nav-item">
+        <a href="{% url 'shopping-list' %}">Shopping List</a>
+      </div>
       <div id="profile" class="nav-item">
         <a href="{% url 'profile' %}">Profile</a>
       </div>
