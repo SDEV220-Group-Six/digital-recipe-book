@@ -1,10 +1,11 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
+from django.db import models
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
-from .models import Ingredient, Recipe
+from .models import Ingredient, Recipe, RecipeIngredient
 from .forms import RecipeForm, RecipeIngredientForm
 from .serializers import IngredientSerializer
 
@@ -19,6 +20,11 @@ def home(request):
 @login_required
 def ingredients(request):
     ingredients = Ingredient.objects.filter(created_by=request.user)
+    ingredients = ingredients.annotate(
+        is_used=models.Exists(
+            RecipeIngredient.objects.filter(ingredient_id=models.OuterRef("id"))
+        )
+    )
     serialized_ingredients = IngredientSerializer(ingredients, many=True).data
     return render(
         request,

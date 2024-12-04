@@ -63,7 +63,7 @@
         <div class="right-section-header">
           <h3>Saved Ingredients</h3>
         </div>
-        
+
         <div class="ingredients-list">
           <ul id="ingredients-list">
             {% if ingredients %}
@@ -73,7 +73,7 @@
                   {% if ingredient.image_url %}
                     <img src="{{ ingredient.image_url }}" alt="{{ ingredient.name }}" class="ingredient-image" />
                   {% endif %}
-                  <button class="delete-ingredient" ingredient-id="{{ ingredient.id }}">Remove</button>
+                  <button class="delete-ingredient {% if ingredient.is_used %}used-ingredient{% endif %}" ingredient-id="{{ ingredient.id }}">Remove</button>
                 </li>
               {% endfor %}
             {% else %}
@@ -81,7 +81,6 @@
             {% endif %}
           </ul>
         </div>
-        
       </div>
       <div class="right-section-footer">
         <div class="decorator-image-right">

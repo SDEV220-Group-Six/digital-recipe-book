@@ -405,6 +405,13 @@ button {
     opacity: 0.8;
 }
 
+/* Disabled button styling */
+.used-ingredient {
+    background-color: gray !important;
+    cursor: not-allowed !important;
+    pointer-events: none !important;
+}
+
 /* Recipes Page settings */
 
 #create-recipe-button {
