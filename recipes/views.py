@@ -121,6 +121,24 @@ def recipe_delete(request, recipe_id):
 
 
 @login_required
+def delete_recipe_ingredient(request, recipe_id, ingredient_id):
+    if request.method == "POST":
+        try:
+            recipe_ingredient = RecipeIngredient.objects.get(
+                recipe_id=recipe_id,
+                ingredient_id=ingredient_id,
+                recipe__created_by=request.user,
+            )
+            recipe_ingredient.delete()
+            return JsonResponse(
+                {"message": "Ingredient removed from recipe"}, status=204
+            )
+        except RecipeIngredient.DoesNotExist:
+            return JsonResponse({"error": "Ingredient not found in recipe"}, status=404)
+    return JsonResponse({"error": "Invalid request method"}, status=400)
+
+
+@login_required
 def shopping_list(request):
     return render(request, "recipes/shopping_list.html")
 

@@ -332,6 +332,51 @@ document.addEventListener("DOMContentLoaded", function () {
             });
         });
     }
+    // Recipe Details functions
+    if (document.title === "Recipe Details") {
+        console.log("Recipe Details page loaded");
+
+        const removeRecipeItemButtons = document.querySelectorAll(".delete-ingredient");
+        console.log(removeRecipeItemButtons);
+        const csrfToken = document.querySelector("[name=csrfmiddlewaretoken]").value;
+        const recipeId = document.getElementById("ingredients-list").getAttribute("data-recipe-id");
+
+        removeRecipeItemButtons.forEach((button) => {
+            button.addEventListener("click", function (event) {
+                event.preventDefault();
+
+                const listItem = button.closest("li");
+                const ingredientId = listItem.getAttribute("ingredient-id");
+                console.log(`Attempting to remove ingredient with ID: ${ingredientId}`);
+
+                const ingredientsList = document.getElementById("ingredients-list");
+
+                fetch(`/recipebook/recipes/${recipeId}/ingredients/${ingredientId}/delete/`, {
+                    method: "POST",
+                    headers: {
+                        "X-CSRFToken": csrfToken,
+                    },
+                })
+                    .then((response) => {
+                        if (response.ok) {
+                            console.log(`Ingredient with ID: ${ingredientId} deleted successfully`);
+                            listItem.remove();
+
+                            if (!ingredientsList.children.length) {
+                                ingredientsList.innerHTML = '<li class="no-ingredients">No ingredients added to this recipe</li>';
+                            }
+                        } else {
+                            console.error("Failed to delete ingredient:", response.statusText);
+                            alert("Failed to delete the ingredient. Please try again.");
+                        }
+                    })
+                    .catch((error) => {
+                        console.error("Error:", error);
+                        alert("An error occurred while deleting the ingredient.");
+                    });
+            });
+        });
+    }
 });
 
 
