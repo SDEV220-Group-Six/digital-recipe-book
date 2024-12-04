@@ -1,0 +1,123 @@
+{% extends 'recipes/base.html' %}
+{% load static %}
+
+{% block title %}
+  Recipe Details
+{% endblock %}
+
+{% block content %}
+  <div class="ingredients-page-container">
+    <div class="left-section">
+      <div class="left-section-rolls">
+        <img src="{% static 'images/left-section-rolls.svg' %}" alt="Divider" />
+      </div>
+      <div class="left-section-header">
+        <h2>{{ recipe.name }}</h2>
+        <div class="decorator-image-left">
+          <img src="{% static 'images/decorator-image-left.svg' %}" alt="Decorator" />
+        </div>
+      </div>
+      <div class="left-section-input-form">
+        <form id="ingredient-form" action="" method="post" enctype="multipart/form-data">
+          <input type="hidden" id="ingredient-id" name="ingredient-id" value="" />
+          {% csrf_token %}
+          <div class="form-group">
+            <div id="upload-area" class="upload-area">
+              {% if recipe.image %}
+                <img id="preview-image" src="{{ recipe.image.url }}" alt="{{ recipe.name }}" style="max-width: 100%; height: auto; margin-top: 10px;" />
+              {% endif %}
+              <input type="file" id="image-upload" name="image" accept="image/*" style="display: none;" />
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="left-section-footer">
+        <!-- Save Ingredient (Submit) Button -->
+        <div class="form-group submit-button">
+          <button type="submit" form="ingredient-form">Save Ingredient</button>
+        </div>
+      </div>
+    </div>
+    {% comment %} <div class="left-section">
+      <div class="left-section-rolls">
+        <img src="{% static 'images/left-section-rolls.svg' %}" alt="Divider" />
+      </div>
+      <div class="left-section-header">
+        <h2>{{ recipe.name }}</h2>
+        <div class="decorator-image-left">
+          <img src="{% static 'images/decorator-image-left.svg' %}" alt="Decorator" />
+        </div>
+      </div>
+      <div class="left-section-content">
+        <div id="upload-area" class="upload-area">
+          <span>Upload Image (optional)</span>
+          {% if recipe.image %}
+            <img src="{{ recipe.image.url }}" alt="{{ recipe.name }}" style="max-width: 100%; height: auto;" />
+          {% endif %}
+          <input type="file" id="image-upload" name="image" accept="image/*" style="display: none;" />
+        </div>
+      </div>
+      <div class="ingredients-container"></div>
+      <div class="left-section-footer">
+        <div class="form-group submit-button">
+          <button type="submit" form="notes-form">Save Notes</button>
+        </div>
+      </div>
+    </div> {% endcomment %}
+    <div class="right-section">
+      <div class="right-section-rolls">
+        <img src="{% static 'images/right-section-rolls.svg' %}" alt="Divider" />
+      </div>
+      <div class="right-section-content">
+        <div class="right-section-header">
+          <h3>Recipe Ingredients</h3>
+        </div>
+        <div class="ingredients-list">
+          <ul id="ingredients-list">
+            {% if ingredients %}
+              {% for ingredient in ingredients %}
+                <li ingredient-id="{{ ingredient.id }}">
+                  <span>{{ ingredient.name }} ({{ ingredient.category }})</span>
+                  {% if ingredient.image_url %}
+                    <img src="{{ ingredient.image_url }}" alt="{{ ingredient.name }}" class="ingredient-image" />
+                  {% endif %}
+                  <button class="delete-ingredient" ingredient-id="{{ ingredient.id }}">Remove</button>
+                </li>
+              {% endfor %}
+            {% else %}
+              <li class="no-ingredients">No selected recipe</li>
+            {% endif %}
+          </ul>
+        </div>
+      </div>
+      <div class="right-section-footer">
+        <div class="decorator-image-right">
+          <img src="{% static 'images/decorator-image-right.svg' %}" alt="Decorator" />
+        </div>
+        <div id="home-button" class="home-button">
+          <a href="{% url 'recipes' %}">Back</a>
+        </div>
+      </div>
+    </div>
+    <div class="nav-section">
+      <div id="ingredients" class="nav-item">
+        <a href="{% url 'ingredients' %}">Ingredients</a>
+      </div>
+      <div id="recipes" class="nav-item">
+        <a href="{% url 'recipes' %}">Recipes</a>
+      </div>
+      <div id="shopping-list" class="nav-item">
+        <a href="{% url 'shopping-list' %}">Shopping List</a>
+      </div>
+      <div id="profile" class="nav-item">
+        <a href="{% url 'profile' %}">Profile</a>
+      </div>
+      <div id="logout" class="nav-item">
+        <form action="{% url 'logout' %}" method="post" style="margin: 0;">
+          {% csrf_token %}
+          <input type="submit" value="Logout" style="all: unset; cursor: pointer;" />
+        </form>
+      </div>
+    </div>
+  </div>
+{% endblock %}
