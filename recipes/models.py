@@ -50,6 +50,68 @@ class Ingredient(models.Model):
         return self.name
 
 
+class Recipe(models.Model):
+    name = models.CharField(max_length=150)  # Name of the recipe
+    image = models.ImageField(
+        upload_to="recipe_images/", blank=True, null=True
+    )  # Optional recipe image
+    instructions = models.TextField()  # Detailed instructions for the recipe
+    created_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+    )  # User who created the recipe
+    created_on = models.DateTimeField(
+        auto_now_add=True
+    )  # Timestamp when the recipe was created
+
+    def get_ingredients(self):
+        return self.recipe_ingredients.select_related("ingredient").all()
+
+    def __str__(self):
+        return self.name
+
+
+class RecipeIngredient(models.Model):
+    UNIT_CHOICES = [
+        ("g", "grams"),
+        ("kg", "kilograms"),
+        ("mg", "milligrams"),
+        ("ml", "milliliters"),
+        ("l", "liters"),
+        ("tsp", "teaspoon"),
+        ("tbsp", "tablespoon"),
+        ("cup", "cup"),
+        ("oz", "ounce"),
+        ("lb", "pound"),
+        ("pcs", "pieces"),
+        ("slice", "slice"),
+        ("pinch", "pinch"),
+        ("whole", "whole"),
+        ("stalk", "stalk"),
+        ("clove", "clove"),
+        ("can", "can"),
+        ("quart", "quart"),
+        ("pint", "pint"),
+    ]
+
+    recipe = models.ForeignKey(
+        Recipe,
+        related_name="recipe_ingredients",
+        on_delete=models.CASCADE,
+    )  # Recipe this ingredient belongs to
+    ingredient = models.ForeignKey(
+        Ingredient,
+        on_delete=models.CASCADE,
+    )  # The ingredient itself
+    quantity = models.FloatField()  # The amount of the ingredient
+    unit = models.CharField(
+        max_length=10, choices=UNIT_CHOICES
+    )  # Unit for the quantity
+
+    def __str__(self):
+        return f"{self.quantity} {self.unit} of {self.ingredient.name} for {self.recipe.name}"
+
+
 class Note(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="note")
     content = models.TextField(blank=True)

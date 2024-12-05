@@ -30,10 +30,10 @@ if (document.title === "Home") {
     });
 }
 
-// Ingredients form functions
 document.addEventListener("DOMContentLoaded", function () {
     console.log("scripts.js is loaded"); // Debugging
 
+    // Ingredients form functions
     if (document.title === "Ingredients") {
         console.log("Ingredients page loaded"); // Debugging
 
@@ -71,9 +71,39 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         });
 
+        async function isDuplicateIngredient(name, ingredientId = null) {
+            try {
+                const response = await fetch("/recipebook/api/ingredients/");
+                if (!response.ok) {
+                    throw new Error("Failed to fetch ingredients.");
+                }
+
+                const ingredients = await response.json();
+
+                // Check for duplicates and exclude the current ingredient ID
+                return ingredients.some(
+                    (ingredient) =>
+                        ingredient.name.toLowerCase() === name.toLowerCase() &&
+                        ingredient.id !== parseInt(ingredientId)
+                );
+            } catch (error) {
+                console.error("Error checking duplicate ingredient:", error);
+                return false;
+            }
+        }
+
         // Form submission to add ingredient
-        form.addEventListener("submit", function (e) {
+        form.addEventListener("submit", async function (e) {
             e.preventDefault();
+
+            const ingredientName = nameInput.value.trim();
+            const ingredientId = document.getElementById("ingredient-id").value;
+
+            const isDuplicate = await isDuplicateIngredient(ingredientName, ingredientId);
+            if (isDuplicate) {
+                alert("An ingredient with this name already exists! Please choose a different name.");
+                return;
+            }
 
             const formData = new FormData();
             formData.append("name", nameInput.value);
@@ -82,8 +112,14 @@ document.addEventListener("DOMContentLoaded", function () {
                 formData.append("image", fileInput.files[0]);
             }
 
-            fetch("/recipes/api/ingredients/", {
-                method: "POST",
+            // check if editing or creating ingredient
+            const url = ingredientId
+                ? `/recipebook/api/ingredients/${ingredientId}/`
+                : "/recipebook/api/ingredients/";
+            const method = ingredientId ? "PUT" : "POST";
+
+            fetch(url, {
+                method: method,
                 body: formData,
                 headers: {
                     "X-CSRFToken": csrfToken,
@@ -91,12 +127,12 @@ document.addEventListener("DOMContentLoaded", function () {
             })
                 .then((response) => {
                     if (!response.ok) {
-                        throw new Error("Failed to add ingredient");
+                        throw new Error(`Failed to ${method === "PUT" ? "update" : "create"} ingredient`);
                     }
                     return response.json();
                 })
                 .then((data) => {
-                    console.log("Ingredient added:", data);
+                    console.log("Ingredient saved:", data);
 
                     // Remove "No saved ingredients" message
                     const noIngredientsMessage = ingredientsList.querySelector(".no-ingredients");
@@ -105,16 +141,27 @@ document.addEventListener("DOMContentLoaded", function () {
                     }
 
                     // Add the new ingredient to the list
-                    const newItem = document.createElement("li");
-                    newItem.setAttribute("ingredient-id", data.id);
-                    newItem.innerHTML = `
-                        <span>${data.name} (${data.category})</span>
-                        <button class="delete-ingredient" ingredient-id="${data.id}">Remove</button>
-                    `;
-                    ingredientsList.appendChild(newItem);
+                    let existingItem = ingredientsList.querySelector(`li[ingredient-id="${data.id}"]`);
+                    if (existingItem) {
+                        // Update the existing ingredient in the list
+                        existingItem.innerHTML = `
+                    <span>${data.name} (${data.category})</span>
+                    <button class="delete-ingredient" ingredient-id="${data.id}">Remove</button>
+                `;
+                    } else {
+                        // Add the new ingredient to the list
+                        const newItem = document.createElement("li");
+                        newItem.setAttribute("ingredient-id", data.id);
+                        newItem.innerHTML = `
+                    <span>${data.name} (${data.category})</span>
+                    <button class="delete-ingredient" ingredient-id="${data.id}">Remove</button>
+                `;
+                        ingredientsList.appendChild(newItem);
+                    }
 
                     // Clear form
                     form.reset();
+                    document.getElementById("ingredient-id").value = "";
                     uploadArea.style.backgroundImage = "none";
                     uploadArea.querySelector("span").style.display = "block";
 
@@ -149,7 +196,7 @@ document.addEventListener("DOMContentLoaded", function () {
         });
 
         function deleteIngredient(ingredientId, listItem) {
-            fetch(`/recipes/api/ingredients/${ingredientId}/`, {
+            fetch(`/recipebook/api/ingredients/${ingredientId}/`, {
                 method: "DELETE",
                 headers: {
                     "X-CSRFToken": csrfToken,
@@ -160,6 +207,12 @@ document.addEventListener("DOMContentLoaded", function () {
                         throw new Error("Failed to delete ingredient");
                     }
                     ingredientsList.removeChild(listItem);
+
+                    // If the deleted ingredient was selected, clear the form
+                    const currentIngredientId = document.getElementById("ingredient-id").value;
+                    if (currentIngredientId === ingredientId) {
+                        clearForm();
+                    }
 
                     if (!ingredientsList.children.length) {
                         ingredientsList.innerHTML = '<li class="no-ingredients">No saved ingredients</li>';
@@ -173,7 +226,7 @@ document.addEventListener("DOMContentLoaded", function () {
         function populateFormForEditing(ingredientId) {
             const previewImage = document.getElementById("preview-image");
 
-            fetch(`/recipes/api/ingredients/${ingredientId}/`, {
+            fetch(`/recipebook/api/ingredients/${ingredientId}/`, {
                 method: "GET",
                 headers: {
                     "X-CSRFToken": csrfToken,
@@ -188,6 +241,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 .then((data) => {
                     nameInput.value = data.name;
                     categoryInput.value = data.category;
+                    document.getElementById("ingredient-id").value = data.id;
 
                     if (data.image) {
                         previewImage.src = data.image;
@@ -212,6 +266,116 @@ document.addEventListener("DOMContentLoaded", function () {
                     alert("Failed to load ingredient details.");
                 });
         }
+
+        // Function to clear the form fields
+        function clearForm() {
+            nameInput.value = ""; // Clear name field
+            categoryInput.value = ""; // Clear category dropdown
+            fileInput.value = ""; // Clear file input
+            document.getElementById("ingredient-id").value = ""; // Clear hidden ingredient ID
+
+            // Clear the image preview
+            const previewImage = document.getElementById("preview-image");
+            previewImage.src = "";
+            previewImage.style.display = "none";
+
+            // Restore the upload area placeholder
+            uploadArea.querySelector("span").style.display = "block";
+
+            // Remove active state from any selected list item
+            document.querySelectorAll("#ingredients-list li").forEach((li) => li.classList.remove("active"));
+        }
+    }
+
+    // Recipes list functions
+    if (document.title === "Recipes") {
+        console.log("Recipes page loaded"); // Debugging
+
+        const removeRecipeItemButtons = document.querySelectorAll(".delete-ingredient")
+        console.log(removeRecipeItemButtons)
+        const csrfToken = document.querySelector("[name=csrfmiddlewaretoken]").value;
+
+        // Add click event listener to each "Remove" button
+        removeRecipeItemButtons.forEach((button) => {
+            button.addEventListener("click", function (event) {
+                event.preventDefault();
+
+                const recipeId = button.getAttribute("recipe-id");
+                console.log(`Attempting to remove recipe with ID: ${recipeId}`);
+
+                const listItem = button.closest("li");
+                const recipesList = document.getElementById("recipes-list");
+
+                fetch(`/recipebook/recipes/${recipeId}/delete/`, {
+                    method: "POST",
+                    headers: {
+                        "X-CSRFToken": csrfToken,
+                    },
+                })
+                    .then((response) => {
+                        if (response.ok) {
+                            console.log(`Recipe with ID: ${recipeId} deleted successfully`);
+                            listItem.remove();
+
+                            if (!recipesList.children.length) {
+                                recipesList.innerHTML = '<li class="no-ingredients">No saved recipes</li>';
+                            }
+                        } else {
+                            console.error("Failed to delete recipe:", response.statusText);
+                            alert("Failed to delete the recipe. Please try again.");
+                        }
+                    })
+                    .catch((error) => {
+                        console.error("Error:", error);
+                        alert("An error occurred while deleting the recipe.");
+                    });
+            });
+        });
+    }
+    // Recipe Details functions
+    if (document.title === "Recipe Details") {
+        console.log("Recipe Details page loaded");
+
+        const removeRecipeItemButtons = document.querySelectorAll(".delete-ingredient");
+        console.log(removeRecipeItemButtons);
+        const csrfToken = document.querySelector("[name=csrfmiddlewaretoken]").value;
+        const recipeId = document.getElementById("ingredients-list").getAttribute("data-recipe-id");
+
+        removeRecipeItemButtons.forEach((button) => {
+            button.addEventListener("click", function (event) {
+                event.preventDefault();
+
+                const listItem = button.closest("li");
+                const ingredientId = listItem.getAttribute("ingredient-id");
+                console.log(`Attempting to remove ingredient with ID: ${ingredientId}`);
+
+                const ingredientsList = document.getElementById("ingredients-list");
+
+                fetch(`/recipebook/recipes/${recipeId}/ingredients/${ingredientId}/delete/`, {
+                    method: "POST",
+                    headers: {
+                        "X-CSRFToken": csrfToken,
+                    },
+                })
+                    .then((response) => {
+                        if (response.ok) {
+                            console.log(`Ingredient with ID: ${ingredientId} deleted successfully`);
+                            listItem.remove();
+
+                            if (!ingredientsList.children.length) {
+                                ingredientsList.innerHTML = '<li class="no-ingredients">No ingredients added to this recipe</li>';
+                            }
+                        } else {
+                            console.error("Failed to delete ingredient:", response.statusText);
+                            alert("Failed to delete the ingredient. Please try again.");
+                        }
+                    })
+                    .catch((error) => {
+                        console.error("Error:", error);
+                        alert("An error occurred while deleting the ingredient.");
+                    });
+            });
+        });
     }
 });
 

@@ -19,6 +19,7 @@
       </div>
       <div class="left-section-input-form">
         <form id="ingredient-form" action="" method="post" enctype="multipart/form-data">
+          <input type="hidden" id="ingredient-id" name="ingredient-id" value="" />
           {% csrf_token %}
           <div class="form-group">
             <div id="upload-area" class="upload-area">
@@ -48,9 +49,9 @@
         </form>
       </div>
       <div class="left-section-footer">
-        <!-- Add Ingredient (Submit) Button -->
+        <!-- Save Ingredient (Submit) Button -->
         <div class="form-group submit-button">
-          <button type="submit" form="ingredient-form">Add Ingredient</button>
+          <button type="submit" form="ingredient-form">Save Ingredient</button>
         </div>
       </div>
     </div>
@@ -62,7 +63,7 @@
         <div class="right-section-header">
           <h3>Saved Ingredients</h3>
         </div>
-        
+
         <div class="ingredients-list">
           <ul id="ingredients-list">
             {% if ingredients %}
@@ -72,7 +73,7 @@
                   {% if ingredient.image_url %}
                     <img src="{{ ingredient.image_url }}" alt="{{ ingredient.name }}" class="ingredient-image" />
                   {% endif %}
-                  <button class="delete-ingredient" ingredient-id="{{ ingredient.id }}">Remove</button>
+                  <button class="delete-ingredient {% if ingredient.is_used %}used-ingredient{% endif %}" ingredient-id="{{ ingredient.id }}">Remove</button>
                 </li>
               {% endfor %}
             {% else %}
@@ -80,7 +81,6 @@
             {% endif %}
           </ul>
         </div>
-        
       </div>
       <div class="right-section-footer">
         <div class="decorator-image-right">

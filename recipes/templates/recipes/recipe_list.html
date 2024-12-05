@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block title %}
-  Recipe
+  Recipes
 {% endblock %}
 
 {% block content %}
@@ -17,73 +17,36 @@
           <img src="{% static 'images/decorator-image-left.svg' %}" alt="Decorator" />
         </div>
       </div>
-      <div class="left-section-input-form">
-        <form id="ingredient-form" action="" method="post" enctype="multipart/form-data">
-          {% csrf_token %}
-          <!-- <div class="form-group">
-            <div id="upload-area" class="upload-area">
-              <span>Upload Image (optional)</span>
-              <img id="preview-image" src="" alt="Preview Image" style="display: none; max-width: 100%; height: auto; margin-top: 10px;" />
-              <input type="file" id="image-upload" name="image" accept="image/*" style="display: none;" />
-            </div>
-          </div> -->
-          <div class="form-group">
-            <div class="form-name-area">
-              <label for="name">Name:</label>
-              <input type="text" id="name" name="name" required />
-            </div>
-          </div>
-          <!-- Categories -->
-          <div class="form-group">
-            <div class="form-category-area">
-              <label for="category">Category:</label>
-              <select id="category" name="category" required>
-                <option value="" disabled selected>Select a category</option>
-                {% for key, value in category_choices %}
-                  <option value="{{ key }}">{{ value }}</option>
-                {% endfor %}
-              </select>
-            </div>
-          </div>
-        </form>
+      <div class="recipes-list">
+        <ul id="recipes-list">
+          {% if recipes %}
+            {% for recipe in recipes %}
+              <li recipe-id="{{ recipe.id }}">
+                <a href="{% url 'recipe_detail' recipe.id %}">{{ recipe.name }}</a>
+                <button class="delete-ingredient" recipe-id="{{ recipe.id }}">Remove</button>
+              </li>
+            {% endfor %}
+          {% else %}
+            <li class="no-ingredients">No saved recipes</li>
+          {% endif %}
+        </ul>
       </div>
-      <div class="left-section-footer">
-        <!-- Add Ingredient (Submit) Button -->
-        <div class="form-group submit-button">
-          <button type="submit" form="ingredient-form">Add Recipe</button>
-        </div>
-      </div>
+      <div class="left-section-footer"></div>
     </div>
     <div class="right-section">
       <div class="right-section-rolls">
         <img src="{% static 'images/right-section-rolls.svg' %}" alt="Divider" />
       </div>
       <div class="right-section-content">
-        <div class="right-section-header">
-          <h3>Saved Recipes</h3>
-        </div>
-        <div class="ingredients-list">
-          <ul id="ingredients-list">
-            {% if ingredients %}
-              {% for ingredient in ingredients %}
-                <li ingredient-id="{{ ingredient.id }}">
-                  <span>{{ ingredient.name }} ({{ ingredient.category }})</span>
-                  {% if ingredient.image_url %}
-                    <img src="{{ ingredient.image_url }}" alt="{{ ingredient.name }}" class="ingredient-image" />
-                  {% endif %}
-                  <button class="delete-ingredient" ingredient-id="{{ ingredient.id }}">Remove</button>
-                </li>
-              {% endfor %}
-            {% else %}
-              <li class="no-ingredients">No saved recipes</li>
-            {% endif %}
-          </ul>
+        <div class="right-section-header"></div>
+        <div class="recipe-image-container">
+          <img src="{% static 'images/burritos.svg' %}" alt="Burritos" />
         </div>
       </div>
       <div class="right-section-footer">
-        <div id="home-button" class="home-button">
-          <a href="{% url 'recipe_detail' %}">Recipe Details</a>
-        </div>        
+        <div id="create-recipe-button">
+          <a href="{% url 'recipe_create' %}" class="btn btn-primary">Create a New Recipe</a>
+        </div>
         <div class="decorator-image-right">
           <img src="{% static 'images/decorator-image-right.svg' %}" alt="Decorator" />
         </div>
