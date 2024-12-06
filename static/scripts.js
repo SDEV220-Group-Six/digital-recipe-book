@@ -333,8 +333,8 @@ document.addEventListener("DOMContentLoaded", function () {
         });
 
         // Add click event listener for "Add to Shopping List" buttons
-        document.querySelectorAll(".add-to-shopping-list").forEach(button => {
-            button.addEventListener("click", function (event) {
+        document.querySelectorAll(".add-to-shopping-list").forEach(icon => {
+            icon.addEventListener("click", function (event) {
                 event.preventDefault();
 
                 const recipeId = this.dataset.recipeId;
