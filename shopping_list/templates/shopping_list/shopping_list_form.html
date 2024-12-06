@@ -1,0 +1,12 @@
+{% extends 'recipes/base.html' %}
+{% block content %}
+  <h2>{{ shopping_list.id|default:'New Shopping List' }}</h2>
+
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Save Shopping List</button>
+  </form>
+
+  <a href="{% url 'shopping_lists' %}">Back</a>
+{% endblock %}

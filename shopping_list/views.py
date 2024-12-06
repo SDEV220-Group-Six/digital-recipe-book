@@ -1,8 +1,9 @@
 import json
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from .models import ShoppingList, ShoppingListItem
+from .forms import ShoppingListForm
 from recipes.models import Recipe
 
 # Create your views here.
@@ -17,7 +18,23 @@ def shopping_lists(request):
         "shopping_list/shopping_lists.html",
         {"lists": lists, "active_list": active_list},
     )
-    
+
+
+@login_required
+def create_shopping_list(request):
+    if request.method == "POST":
+        form = ShoppingListForm(request.POST, request.FILES)
+        if form.is_valid():
+            shopping_list = form.save(commit=False)
+            shopping_list.created_by = request.user
+            shopping_list.save()
+            return redirect("shopping_lists")
+    else:
+        form = ShoppingListForm()
+
+    return render(request, "shopping_list/shopping_list_form.html", {"form": form})
+
+
 @login_required
 def delete_shopping_list(request, list_id):
     if request.method != "DELETE":
