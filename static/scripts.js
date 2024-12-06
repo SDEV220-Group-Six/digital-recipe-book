@@ -503,6 +503,47 @@ document.addEventListener("DOMContentLoaded", function () {
                     });
             });
         });
+
+        // Remove shopping list
+    document.querySelectorAll(".delete-ingredient").forEach(button => {
+        button.addEventListener("click", function (event) {
+            event.stopPropagation();
+
+            const listId = this.dataset.listId;
+
+            if (!listId) {
+                console.error("List ID is undefined for this shopping list item.");
+                return;
+            }
+
+            console.log(`Attempting to remove shopping list with ID: ${listId}`);
+
+            fetch(`/recipebook/shop/${listId}/delete/`, {
+                method: "DELETE",
+                headers: {
+                    "X-CSRFToken": document.querySelector("[name=csrfmiddlewaretoken]").value,
+                },
+            })
+                .then(response => {
+                    if (response.ok) {
+                        console.log(`Shopping list with ID ${listId} removed successfully.`);
+                        this.closest("li").remove();
+
+                        const shoppingListContainer = document.querySelector("#shopping-lists ul");
+                        if (!shoppingListContainer.children.length) {
+                            shoppingListContainer.innerHTML = `<li class="no-ingredients">No shopping lists available.</li>`;
+                        }
+                    } else {
+                        console.error("Failed to remove shopping list:", response.statusText);
+                        alert("Failed to remove the shopping list. Please try again.");
+                    }
+                })
+                .catch(error => {
+                    console.error("Error removing shopping list:", error);
+                    alert("An error occurred while removing the shopping list.");
+                });
+        });
+    });
     }
 });
 

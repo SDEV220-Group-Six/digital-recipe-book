@@ -17,6 +17,15 @@ def shopping_lists(request):
         "shopping_list/shopping_lists.html",
         {"lists": lists, "active_list": active_list},
     )
+    
+@login_required
+def delete_shopping_list(request, list_id):
+    if request.method != "DELETE":
+        return JsonResponse({"error": "Invalid request method."}, status=405)
+
+    shopping_list = get_object_or_404(ShoppingList, id=list_id, created_by=request.user)
+    shopping_list.delete()
+    return JsonResponse({"message": "Shopping list deleted successfully."}, status=204)
 
 
 @login_required

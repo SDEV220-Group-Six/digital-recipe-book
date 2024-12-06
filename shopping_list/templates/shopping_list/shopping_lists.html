@@ -33,17 +33,21 @@
         <div id="shopping-lists" class="shopping-list">
           <h3>Saved Lists</h3>
           <ul>
-            {% for shopping_list in lists %}
-              <li class="shopping-list {% if shopping_list.active %}active{% endif %}" data-list-id="{{ shopping_list.id }}">
-                <span>{{ shopping_list.name }}</span>
-                {% if shopping_list.active %}
-                  <img src="{% static 'images/toggle-on.svg' %}" alt="Active" class="toggle-icon" data-list-id="{{ shopping_list.id }}" />
-                {% else %}
-                  <img src="{% static 'images/toggle-off.svg' %}" alt="Inactive" class="toggle-icon" data-list-id="{{ shopping_list.id }}" />
-                {% endif %}
-                <button class="delete-ingredient" data-list-id="{{ shopping_list.id }}">Remove</button>
-              </li>
-            {% endfor %}
+            {% if lists %}
+              {% for shopping_list in lists %}
+                <li class="shopping-list {% if shopping_list.active %}active{% endif %}" data-list-id="{{ shopping_list.id }}">
+                  <span>{{ shopping_list.name }}</span>
+                  {% if shopping_list.active %}
+                    <img src="{% static 'images/toggle-on.svg' %}" alt="Active" class="toggle-icon" data-list-id="{{ shopping_list.id }}" />
+                  {% else %}
+                    <img src="{% static 'images/toggle-off.svg' %}" alt="Inactive" class="toggle-icon" data-list-id="{{ shopping_list.id }}" />
+                  {% endif %}
+                  <button class="delete-ingredient" data-list-id="{{ shopping_list.id }}">Remove</button>
+                </li>
+              {% endfor %}
+            {% else %}
+              <li class="no-ingredients">No shopping lists available. Click on the create button below to add one!</li>
+            {% endif %}
           </ul>
         </div>
       </div>
