@@ -18,7 +18,7 @@
         </div>
       </div>
       <div class="left-section-content">
-        <div class="ingredients-list">
+        <div id="shopping-list-ingredients-list" class="ingredients-list">
           <ul id="ingredients-list">
             <li class="no-ingredients">Select a shopping list to view its ingredients.</li>
           </ul>
@@ -30,18 +30,27 @@
         <img src="{% static 'images/right-section-rolls.svg' %}" alt="Divider" />
       </div>
       <div class="right-section-content">
-        <div class="shopping-list">
+        <div id="shopping-lists" class="shopping-list">
+          <h3>Saved Lists</h3>
           <ul>
             {% for shopping_list in lists %}
               <li class="shopping-list {% if shopping_list.active %}active{% endif %}" data-list-id="{{ shopping_list.id }}">
                 <span>{{ shopping_list.name }}</span>
-                <button class="toggle-active" data-list-id="{{ shopping_list.id }}">Set Active</button>
+                {% if shopping_list.active %}
+                  <img src="{% static 'images/toggle-on.svg' %}" alt="Active" class="toggle-icon" data-list-id="{{ shopping_list.id }}" />
+                {% else %}
+                  <img src="{% static 'images/toggle-off.svg' %}" alt="Inactive" class="toggle-icon" data-list-id="{{ shopping_list.id }}" />
+                {% endif %}
+                <button class="delete-ingredient" data-list-id="{{ shopping_list.id }}">Remove</button>
               </li>
             {% endfor %}
           </ul>
         </div>
       </div>
       <div class="right-section-footer">
+        <div id="create-shopping-list-button">
+          <a href="" class="btn btn-primary">Create New Shopping List</a>
+        </div>
         <div class="decorator-image-right">
           <img src="{% static 'images/decorator-image-right.svg' %}" alt="Decorator" />
         </div>

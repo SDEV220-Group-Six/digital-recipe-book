@@ -422,9 +422,18 @@ document.addEventListener("DOMContentLoaded", function () {
             return;
         }
 
-        document.querySelectorAll(".toggle-active").forEach(button => {
-            button.addEventListener("click", function () {
+        document.querySelectorAll(".toggle-icon").forEach(icon => {
+            icon.addEventListener("click", function (event) {
+                event.stopPropagation();
+
                 const listId = this.dataset.listId;
+                const isActive = this.src.includes("toggle-on.svg");
+
+                if (isActive) {
+                    console.log(`List ID ${listId} is already active.`);
+                    return;
+                }
+
                 fetch(`/recipebook/shop/${listId}/toggle-active/`, {
                     method: "POST",
                     headers: {
@@ -434,10 +443,19 @@ document.addEventListener("DOMContentLoaded", function () {
                     .then(response => response.json())
                     .then(data => {
                         console.log(data.message);
+
                         document.querySelectorAll(".shopping-list").forEach(list => {
                             list.classList.remove("active");
+                            const icon = list.querySelector(".toggle-icon");
+                            if (icon) {
+                                icon.src = "/static/images/toggle-off.svg";
+                                icon.alt = "Inactive";
+                            }
                         });
+
                         this.closest(".shopping-list").classList.add("active");
+                        this.src = "/static/images/toggle-on.svg";
+                        this.alt = "Active";
                     })
                     .catch(error => console.error("Error:", error));
             });
@@ -446,14 +464,6 @@ document.addEventListener("DOMContentLoaded", function () {
         document.querySelectorAll(".shopping-list li").forEach(item => {
             item.addEventListener("click", function () {
                 const listId = this.dataset.listId;
-
-                document.querySelectorAll(".shopping-list li").forEach(item => {
-                    const listId = item.dataset.listId;
-                    console.log(`Shopping List Item: ${item.innerText}, Data List ID: ${listId}`);
-                    if (!listId) {
-                        console.error("Missing data-list-id for this item:", item);
-                    }
-                });
 
                 if (!listId) {
                     console.error("List ID is undefined for this shopping list item.");
