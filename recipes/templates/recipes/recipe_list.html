@@ -23,7 +23,11 @@
             {% for recipe in recipes %}
               <li recipe-id="{{ recipe.id }}">
                 <a href="{% url 'recipe_detail' recipe.id %}">{{ recipe.name }}</a>
-                <span class="add-to-shopping-list" data-recipe-id="{{ recipe.id }}"><img src="{% static 'images/shopping-cart.svg' %}" alt="Add to Shopping List" class="shopping-cart-icon" /></span>
+                <span class="add-to-shopping-list" data-recipe-id="{{ recipe.id }}">
+                  {% if recipe.get_ingredients %}
+                    <img src="{% static 'images/shopping-cart.svg' %}" alt="Add to Shopping List" class="shopping-cart-icon" />
+                  {% endif %}
+                </span>
                 <button class="delete-ingredient" recipe-id="{{ recipe.id }}">Remove</button>
               </li>
             {% endfor %}
