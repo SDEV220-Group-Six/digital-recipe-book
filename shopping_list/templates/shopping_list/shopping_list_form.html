@@ -1,12 +1,74 @@
 {% extends 'recipes/base.html' %}
+{% load static %}
+
+{% block title %}
+  Create Shopping List
+{% endblock %}
+
 {% block content %}
-  <h2>{{ shopping_list.id|default:'New Shopping List' }}</h2>
-
-  <form method="post" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Save Shopping List</button>
-  </form>
-
-  <a href="{% url 'shopping_lists' %}">Back</a>
+  <div class="ingredients-page-container">
+    <div class="left-section">
+      <div class="left-section-rolls">
+        <img src="{% static 'images/left-section-rolls.svg' %}" alt="Divider" />
+      </div>
+      <div class="left-section-header">
+        <h2>{{ shopping_list.id|default:'New Shopping List' }}</h2>
+        <div class="decorator-image-left">
+          <img src="{% static 'images/decorator-image-left.svg' %}" alt="Decorator" />
+        </div>
+      </div>
+      <div class="left-section-content">
+        <div class="shopping-list-image-container">
+          <img src="/static/images/shopping-bag.svg" alt="Shopping Bag" />
+        </div>
+      </div>
+    </div>
+    <div class="right-section">
+      <div class="right-section-rolls">
+        <img src="{% static 'images/right-section-rolls.svg' %}" alt="Divider" />
+      </div>
+      <div class="right-section-content">
+        <div class="shopping-list-image-container-right">
+          <img src="/static/images/shopping-bag-pointer-icon.svg" alt="Shopping Icon" />
+          <div class="form-group">
+            <div id="new-shopping-list-form" class="form-name-area">
+              <form method="post" enctype="multipart/form-data" id="create-shopping-list-form">
+                {% csrf_token %}
+                {{ form.as_p }}
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="right-section-footer">
+        <div class="form-group submit-button">
+          <button type="submit" form="create-shopping-list-form">Save Shopping List</button>
+        </div>
+        <div class="decorator-image-right">
+          <img src="{% static 'images/decorator-image-right.svg' %}" alt="Decorator" />
+        </div>
+        <div id="home-button" class="home-button">
+          <a href="{% url 'shopping_lists' %}">Back</a>
+        </div>
+      </div>
+    </div>
+    <div class="nav-section">
+      <div id="ingredients" class="nav-item">
+        <a href="{% url 'ingredients' %}">Ingredients</a>
+      </div>
+      <div id="recipes" class="nav-item">
+        <a href="{% url 'recipes' %}">Recipes</a>
+      </div>
+      <div id="shopping-list" class="nav-item active">Shopping List</div>
+      <div id="profile" class="nav-item">
+        <a href="{% url 'profile' %}">Profile</a>
+      </div>
+      <div id="logout" class="nav-item">
+        <form action="{% url 'logout' %}" method="post" style="margin: 0;">
+          {% csrf_token %}
+          <input type="submit" value="Logout" style="all: unset; cursor: pointer;" />
+        </form>
+      </div>
+    </div>
+  </div>
 {% endblock %}

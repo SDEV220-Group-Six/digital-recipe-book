@@ -629,12 +629,49 @@ button {
     margin-right: 15px;
 }
 
+.shopping-list-image-container {
+    display: flex;
+    margin: auto;
+    width: 90%;
+    max-height: 90%;
+    align-items: center;
+}
+
+.shopping-list-image-container-right {
+    max-height: 100%;
+    align-items: center;
+    overflow: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-right: 50px;
+}
+
+.shopping-list-image-container img {
+    width: 80%;
+    height: auto;
+    margin: auto;
+}
+
+.shopping-list-image-container-right img {
+    margin-bottom: 10px;
+    max-width: 50%;
+    height: auto;
+    align-self: center;
+}
+
+#new-shopping-list-form {
+    margin-top: 20px;
+    display: block;
+    text-align: center;
+}
+
 /* Profile Page settings */
 
 .notes-container {
     width: 100%;
     padding: 10px;
-    height: 70%;
+    height: 75%;
 }
 
 .notes-container textarea {
