@@ -29,6 +29,7 @@ urlpatterns = [
     path("logout.html", views.RecipeBookLogoutView.as_view(), name="logout"),
     path("profile/", views.profile, name="profile"),
     path("recipebook/", include("recipes.urls")),
+    path("recipebook/", include("shopping_list.urls")),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

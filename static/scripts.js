@@ -331,6 +331,39 @@ document.addEventListener("DOMContentLoaded", function () {
                     });
             });
         });
+
+        // Add click event listener for "Add to Shopping List" buttons
+        document.querySelectorAll(".add-to-shopping-list").forEach(icon => {
+            icon.addEventListener("click", function (event) {
+                event.preventDefault();
+
+                const recipeId = this.dataset.recipeId;
+                console.log(`Adding ingredients of recipe ID: ${recipeId} to active shopping list`);
+
+                fetch("/recipebook/shop/add-recipe-ingredients/", {
+                    method: "POST",
+                    headers: {
+                        "X-CSRFToken": csrfToken,
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({ recipe_id: recipeId }),
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.error) {
+                            console.error(data.error);
+                            alert("Failed to add ingredients to shopping list: " + data.error);
+                        } else {
+                            console.log(data.message);
+                            alert(data.message);
+                        }
+                    })
+                    .catch(error => {
+                        console.error("Error:", error);
+                        alert("An error occurred while adding ingredients to the shopping list.");
+                    });
+            });
+        });
     }
     // Recipe Details functions
     if (document.title === "Recipe Details") {
@@ -373,6 +406,141 @@ document.addEventListener("DOMContentLoaded", function () {
                     .catch((error) => {
                         console.error("Error:", error);
                         alert("An error occurred while deleting the ingredient.");
+                    });
+            });
+        });
+    }
+
+    //Shopping List functions
+    if (document.title === "Shopping List") {
+        console.log("Shopping List page loaded");
+
+        const ingredientsList = document.getElementById("ingredients-list");
+
+        if (!ingredientsList) {
+            console.error("ingredientsList element not found in the DOM.");
+            return;
+        }
+
+        document.querySelectorAll(".toggle-icon").forEach(icon => {
+            icon.addEventListener("click", function (event) {
+                event.stopPropagation();
+
+                const listId = this.dataset.listId;
+                const isActive = this.src.includes("toggle-on.svg");
+
+                if (isActive) {
+                    console.log(`List ID ${listId} is already active.`);
+                    return;
+                }
+
+                fetch(`/recipebook/shop/${listId}/toggle-active/`, {
+                    method: "POST",
+                    headers: {
+                        "X-CSRFToken": document.querySelector("[name=csrfmiddlewaretoken]").value
+                    }
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log(data.message);
+
+                        document.querySelectorAll(".shopping-list").forEach(list => {
+                            list.classList.remove("active");
+                            const icon = list.querySelector(".toggle-icon");
+                            if (icon) {
+                                icon.src = "/static/images/toggle-off.svg";
+                                icon.alt = "Inactive";
+                            }
+                        });
+
+                        this.closest(".shopping-list").classList.add("active");
+                        this.src = "/static/images/toggle-on.svg";
+                        this.alt = "Active";
+                    })
+                    .catch(error => console.error("Error:", error));
+            });
+        });
+
+        document.querySelectorAll(".shopping-list li").forEach(item => {
+            item.addEventListener("click", function () {
+                const listId = this.dataset.listId;
+
+                if (!listId) {
+                    console.error("List ID is undefined for this shopping list item.");
+                    return;
+                }
+
+                console.log(`Fetching ingredients for shopping list ID: ${listId}`);
+
+                fetch(`/recipebook/shop/${listId}/ingredients/`, {
+                    method: "GET",
+                    headers: {
+                        "X-CSRFToken": document.querySelector("[name=csrfmiddlewaretoken]").value,
+                    },
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.error) {
+                            console.error(data.error);
+                            ingredientsList.innerHTML = `<li class="no-ingredients">${data.error}</li>`;
+                        } else {
+                            ingredientsList.innerHTML = "";
+
+                            if (data.ingredients.length === 0) {
+                                ingredientsList.innerHTML = `<li class="no-ingredients">No ingredients in this shopping list.</li>`;
+                            } else {
+                                data.ingredients.forEach(ingredient => {
+                                    const li = document.createElement("li");
+                                    li.textContent = `${ingredient.quantity} ${ingredient.unit} of ${ingredient.name}`;
+                                    ingredientsList.appendChild(li);
+                                });
+                            }
+                        }
+                    })
+                    .catch(error => {
+                        console.error("Error fetching ingredients:", error);
+                        ingredientsList.innerHTML = `<li class="no-ingredients">Error loading ingredients. Please try again.</li>`;
+                    });
+            });
+        });
+
+        // Remove shopping list
+        document.querySelectorAll(".delete-ingredient").forEach(button => {
+            button.addEventListener("click", function (event) {
+                event.stopPropagation();
+
+                const listId = this.dataset.listId;
+
+                if (!listId) {
+                    console.error("List ID is undefined for this shopping list item.");
+                    return;
+                }
+
+                console.log(`Attempting to remove shopping list with ID: ${listId}`);
+
+                fetch(`/recipebook/shop/${listId}/delete/`, {
+                    method: "DELETE",
+                    headers: {
+                        "X-CSRFToken": document.querySelector("[name=csrfmiddlewaretoken]").value,
+                    },
+                })
+                    .then(response => {
+                        if (response.ok) {
+                            console.log(`Shopping list with ID ${listId} removed successfully.`);
+                            this.closest("li").remove();
+
+                            const shoppingListContainer = document.querySelector("#shopping-lists ul");
+                            if (!shoppingListContainer.children.length) {
+                                shoppingListContainer.innerHTML = `<li class="no-ingredients">No shopping lists available.</li>`;
+                            }
+                        } else {
+                            console.error("Failed to remove shopping list:", response.statusText);
+                            alert("Failed to remove the shopping list. Please try again.");
+                        }
+                    })
+                    .catch(error => {
+                        console.error("Error removing shopping list:", error);
+                        alert("An error occurred while removing the shopping list.");
                     });
             });
         });

@@ -23,6 +23,11 @@
             {% for recipe in recipes %}
               <li recipe-id="{{ recipe.id }}">
                 <a href="{% url 'recipe_detail' recipe.id %}">{{ recipe.name }}</a>
+                <span class="add-to-shopping-list" data-recipe-id="{{ recipe.id }}">
+                  {% if recipe.get_ingredients %}
+                    <img src="{% static 'images/shopping-cart.svg' %}" alt="Add to Shopping List" class="shopping-cart-icon" />
+                  {% endif %}
+                </span>
                 <button class="delete-ingredient" recipe-id="{{ recipe.id }}">Remove</button>
               </li>
             {% endfor %}
@@ -61,7 +66,7 @@
       </div>
       <div id="recipes" class="nav-item active">Recipes</div>
       <div id="shopping-list" class="nav-item">
-        <a href="{% url 'shopping-list' %}">Shopping List</a>
+        <a href="{% url 'shopping_lists' %}">Shopping List</a>
       </div>
       <div id="profile" class="nav-item">
         <a href="{% url 'profile' %}">Profile</a>

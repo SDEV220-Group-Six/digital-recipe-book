@@ -1,0 +1,85 @@
+{% extends 'recipes/base.html' %}
+{% load static %}
+
+{% block title %}
+  Shopping List
+{% endblock %}
+
+{% block content %}
+  <div class="ingredients-page-container">
+    <div class="left-section">
+      <div class="left-section-rolls">
+        <img src="{% static 'images/left-section-rolls.svg' %}" alt="Divider" />
+      </div>
+      <div class="left-section-header">
+        <h2>Shopping List</h2>
+        <div class="decorator-image-left">
+          <img src="{% static 'images/decorator-image-left.svg' %}" alt="Decorator" />
+        </div>
+      </div>
+      <div class="left-section-content">
+        <div id="shopping-list-ingredients-list" class="ingredients-list">
+          <ul id="ingredients-list">
+            <li class="no-ingredients">Select a shopping list to view its ingredients.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="right-section">
+      <div class="right-section-rolls">
+        <img src="{% static 'images/right-section-rolls.svg' %}" alt="Divider" />
+      </div>
+      <div class="right-section-content">
+        <div id="shopping-lists" class="shopping-list">
+          <h3>Saved Lists</h3>
+          <ul>
+            {% if lists %}
+              {% for shopping_list in lists %}
+                <li class="shopping-list {% if shopping_list.active %}active{% endif %}" data-list-id="{{ shopping_list.id }}">
+                  <span>{{ shopping_list.name }}</span>
+                  {% if shopping_list.active %}
+                    <img src="{% static 'images/toggle-on.svg' %}" alt="Active" class="toggle-icon" data-list-id="{{ shopping_list.id }}" />
+                  {% else %}
+                    <img src="{% static 'images/toggle-off.svg' %}" alt="Inactive" class="toggle-icon" data-list-id="{{ shopping_list.id }}" />
+                  {% endif %}
+                  <button class="delete-ingredient" data-list-id="{{ shopping_list.id }}">Remove</button>
+                </li>
+              {% endfor %}
+            {% else %}
+              <li class="no-ingredients">No shopping lists available. Click on the create button below to add one!</li>
+            {% endif %}
+          </ul>
+        </div>
+      </div>
+      <div class="right-section-footer">
+        <div id="create-shopping-list-button">
+          <a href="{% url 'create_shopping_list' %}" class="btn btn-primary">Create New Shopping List</a>
+        </div>
+        <div class="decorator-image-right">
+          <img src="{% static 'images/decorator-image-right.svg' %}" alt="Decorator" />
+        </div>
+        <div id="home-button" class="home-button">
+          <a href="{% url 'home' %}">Home</a>
+        </div>
+      </div>
+    </div>
+    <div class="nav-section">
+      <div id="ingredients" class="nav-item">
+        <a href="{% url 'ingredients' %}">Ingredients</a>
+      </div>
+      <div id="recipes" class="nav-item">
+        <a href="{% url 'recipes' %}">Recipes</a>
+      </div>
+      <div id="shopping-list" class="nav-item active">Shopping List</div>
+      <div id="profile" class="nav-item">
+        <a href="{% url 'profile' %}">Profile</a>
+      </div>
+      <div id="logout" class="nav-item">
+        <form action="{% url 'logout' %}" method="post" style="margin: 0;">
+          {% csrf_token %}
+          <input type="submit" value="Logout" style="all: unset; cursor: pointer;" />
+        </form>
+      </div>
+    </div>
+  </div>
+{% endblock %}
