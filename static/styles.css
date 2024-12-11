@@ -211,6 +211,7 @@ button {
 .right-section-footer img {
     width: 100%;
     padding-bottom: 15px;
+    padding-top: 10px;
 }
 
 .right-section-footer #home-button {
@@ -442,19 +443,6 @@ button {
     margin: auto;
 }
 
-.pot-image-container {
-    padding-top: 25px;
-    width: 90%;
-    max-height: 90%;
-    overflow: auto;
-    margin: auto;
-}
-
-.pot-image-container img {
-    width: 50%;
-    height: auto;
-    margin-left: 150px;
-}
 .recipes-list {
     overflow: scroll;
     max-height: 80%;
@@ -707,13 +695,12 @@ button {
     height: 90%;
 }
 
-/* recipe stuff */
+/* Recipe Form Page */
 
 #back-button {
     background: #e7c851;
     width: fit-content;
     margin: auto;
-    margin-top: 10px;
     border: none;
     color: black;
     font-weight: bold;
@@ -721,6 +708,41 @@ button {
     font-size: 1rem;
     text-align: center;
     padding: 10px;
+}
+
+#recipe-form-left-section-content {
+    width: 80%;
+    height: 70%;
+    padding-left: 25px;
+}
+
+.right-section-content textarea {
+    width: 90%;
+    height: 80%;
+    margin: auto;
+    margin-left: 14px;
+    resize: none;
+}
+
+.recipe-form-nav-buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.pot-image-container {
+    padding-top: 25px;
+    width: 90%;
+    max-height: 90%;
+    overflow: auto;
+    margin: auto;
+}
+
+.pot-image-container img {
+    width: 50%;
+    height: auto;
+    margin-left: 140px;
 }
 
 /* Media queries */
