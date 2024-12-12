@@ -1,13 +1,99 @@
 {% extends 'recipes/base.html' %}
+{% load static %}
+
+{% block title %}
+  Create Shopping List
+{% endblock %}
+
 {% block content %}
-  <h2>Add Ingredient to Recipe: {{ recipe.name }}</h2>
-
-  <form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit" name="add_and_continue">Add Ingredient & Add Another</button>
-    <button type="submit" name="add_and_finish">Add Ingredient & Finish</button>
-  </form>
-
-  <a href="{% url 'recipe_detail' recipe.id %}">Back to Recipe Details</a>
+  <div class="ingredients-page-container">
+    <div class="left-section">
+      <div class="left-section-rolls">
+        <img src="{% static 'images/left-section-rolls.svg' %}" alt="Divider" />
+      </div>
+      <div class="left-section-header">
+        <h2>Add Ingredient to Recipe: {{ recipe.name }}</h2>
+        <div class="decorator-image-left">
+          <img src="{% static 'images/decorator-image-left.svg' %}" alt="Decorator" />
+        </div>
+      </div>
+      <div class="left-section-content">
+        <form method="post">
+          {% csrf_token %}
+          <div class="left-section-content" id="recipe-form-left-section-content">
+            <div class="form-group">
+              <div class="form-name-area">
+                <p style="display: inline-block; font-weight: bold;">Ingredient:</p>
+                {{ form.ingredient }}
+              </div>
+              <div class="form-name-area">
+                <p style="display: inline-block; font-weight: bold;">Unit:</p>
+                {{ form.unit }}
+              </div>
+              <div class="form-name-area">
+                <p style="display: inline-block; font-weight: bold;">Quantity:</p>
+                {{ form.quantity }}
+              </div>
+            </div>
+          </div>
+          <div class="form-group submit-button">
+          <button type="submit" name="add_and_continue">Add Ingredient & Add Another</button>
+          </div>
+          <div class="form-group submit-button">
+           <button type="submit" name="add_and_finish">Add Ingredient & Finish</button>
+            </div>
+          <!-- {{ form.as_p }} -->
+          <!-- <button type="submit" name="add_and_continue">Add Ingredient & Add Another</button>
+          <button type="submit" name="add_and_finish">Add Ingredient & Finish</button> -->
+        </form>
+      </div>
+    </div>
+    <div class="right-section">
+      <div class="right-section-rolls">
+        <img src="{% static 'images/right-section-rolls.svg' %}" alt="Divider" />
+      </div>
+      <div class="right-section-content">
+        <div class="shopping-list-image-container-right">
+          <img src="/static/images/ingredients.svg" alt="ingredients Icon" />
+          
+        </div>
+      </div>
+      <div class="right-section-footer">
+        
+        <div class="decorator-image-right">
+          <img src="{% static 'images/decorator-image-right.svg' %}" alt="Decorator" />
+        </div>
+        <div class="recipe-form-nav-buttons">
+          <div id="back-button" class="back-button">
+            <a href="{% url 'recipe_detail' recipe.id %}">Back</a>
+          </div>
+          <div id="home-button" class="home-button">
+            <a href="{% url 'home' %}">Home</a>
+          </div>
+        </div>
+        <!-- <a href="{% url 'recipe_detail' recipe.id %}">Back to Recipe Details</a>
+        <div id="home-button" class="home-button">
+          <a href="{% url 'shopping_lists' %}">Back</a>
+        </div> -->
+      </div>
+    </div>
+    <div class="nav-section">
+      <div id="ingredients" class="nav-item">
+        <a href="{% url 'ingredients' %}">Ingredients</a>
+      </div>
+      <div id="recipes" class="nav-item">
+        <a href="{% url 'recipes' %}">Recipes</a>
+      </div>
+      <div id="shopping-list" class="nav-item active">Shopping List</div>
+      <div id="profile" class="nav-item">
+        <a href="{% url 'profile' %}">Profile</a>
+      </div>
+      <div id="logout" class="nav-item">
+        <form action="{% url 'logout' %}" method="post" style="margin: 0;">
+          {% csrf_token %}
+          <input type="submit" value="Logout" style="all: unset; cursor: pointer;" />
+        </form>
+      </div>
+    </div>
+  </div>
 {% endblock %}
