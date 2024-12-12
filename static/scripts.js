@@ -411,6 +411,47 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
+    // Recipe Form Page functions
+
+    if (document.title === "Add New Recipe") {
+        console.log("Create/Edit Recipe page loaded");
+
+        const uploadArea = document.getElementById("upload-area");
+        const fileInput = document.getElementById("image-upload");
+        const previewImage = document.getElementById("preview-image");
+
+        uploadArea.addEventListener("click", function () {
+            fileInput.click();
+        });
+
+        fileInput.addEventListener("change", function () {
+            if (fileInput.files && fileInput.files[0]) {
+                const file = fileInput.files[0];
+                if (file.type.startsWith("image/")) {
+                    const reader = new FileReader();
+                    reader.onload = function (e) {
+                        previewImage.src = e.target.result;
+                        uploadArea.querySelector("span").style.display = "none";
+                        previewImage.style.display = "block";
+                    };
+                    reader.readAsDataURL(file);
+                } else {
+                    alert("Please upload a valid image file.");
+                    resetUploadArea();
+                }
+            } else {
+                resetUploadArea();
+            }
+        });
+
+        function resetUploadArea() {
+            previewImage.src = "";
+            previewImage.style.display = "none";
+            uploadArea.querySelector("span").style.display = "block";
+            fileInput.value = "";
+        }
+    }
+
     //Shopping List functions
     if (document.title === "Shopping List") {
         console.log("Shopping List page loaded");
