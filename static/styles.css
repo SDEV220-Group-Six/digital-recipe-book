@@ -211,6 +211,7 @@ button {
 .right-section-footer img {
     width: 100%;
     padding-bottom: 15px;
+    padding-top: 10px;
 }
 
 .right-section-footer #home-button {
@@ -270,6 +271,19 @@ button {
 
 .submit-button button:hover {
     text-decoration: underline;
+}
+
+.ingredients-submit-button button {
+    background: #8fbb45;
+    width: fit-content;
+    margin: auto;
+    border: none;
+    color: black;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 1rem;
+    text-align: center;
+    padding: 5px;
 }
 
 .ingredients-page-container .form-name-area {
@@ -666,6 +680,19 @@ button {
     text-align: center;
 }
 
+.shopping-list-submit-button button {
+    background: #8fbb45;
+    width: fit-content;
+    margin: auto;
+    border: none;
+    color: black;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 1rem;
+    text-align: center;
+    padding: 5px;
+}
+
 /* Profile Page settings */
 
 .notes-container {
@@ -692,6 +719,158 @@ button {
 .left-section-content {
     width: 90%;
     height: 90%;
+}
+
+.profile-submit-button button {
+    background: #8fbb45;
+    width: fit-content;
+    margin: auto;
+    border: none;
+    color: black;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 1rem;
+    text-align: center;
+    padding: 5px;
+}
+
+/* Recipe Form Page */
+
+.new-recipe-submit-button button {
+    background: #8fbb45;
+    width: fit-content;
+    margin: auto;
+    border: none;
+    color: black;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 1rem;
+    text-align: center;
+    padding: 5px;
+}
+
+#back-button {
+    background: #e7c851;
+    width: fit-content;
+    margin: auto;
+    border: none;
+    color: black;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 1rem;
+    text-align: center;
+    padding: 10px;
+}
+
+#recipe-form-left-section-content {
+    width: 80%;
+    height: 70%;
+    padding-left: 25px;
+}
+
+.right-section-content textarea {
+    width: 90%;
+    height: 80%;
+    margin: auto;
+    margin-left: 14px;
+    resize: none;
+}
+
+.recipe-form-nav-buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.pot-image-container {
+    padding-top: 25px;
+    width: 90%;
+    max-height: 90%;
+    overflow: auto;
+    margin: auto;
+}
+
+.pot-image-container img {
+    width: 50%;
+    height: auto;
+    margin-left: 140px;
+}
+
+/* Add Ingredient Form Page */
+
+.add-ingredient-form-left-section-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 80%;
+    padding: 20px;
+    gap: 15px;
+    margin: auto;
+}
+
+.add-ingredient-form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+.add-ingredient-form-name-area {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 5px;
+    width: 100%;
+}
+
+.add-ingredient-form-name-area p {
+    font-weight: bold;
+    margin: 0;
+    font-size: 1rem;
+}
+
+.add-ingredient-form-name-area select,
+.add-ingredient-form-name-area input {
+    width: 100%;
+    padding: 10px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.add-ingredient-form-left-section-buttons {
+    display: flex;
+    margin-top: 150px;
+}
+
+.form-group.submit-button {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.submit-button button {
+    padding: 10px 20px;
+    font-size: 1rem;
+    border-radius: 5px;
+    background: #8fbb45;
+    color: black;
+    font-weight: bold;
+    cursor: pointer;
+    border: none;
+    margin: 10px 5px;
+}
+
+.submit-button button:hover {
+    background-color: #7aa93c;
+}
+
+#add-ingredient-container-right {
+    margin-top: 50px;
 }
 
 /* Media queries */

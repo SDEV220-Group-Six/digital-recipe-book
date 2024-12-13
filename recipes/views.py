@@ -80,7 +80,7 @@ def recipe_edit(request, recipe_id):
     else:
         form = RecipeForm(instance=recipe)
 
-    return render(request, "recipes/recipe_form.html", {"form": form})
+    return render(request, "recipes/recipe_form.html", {"form": form, "recipe":recipe})
 
 
 @login_required
