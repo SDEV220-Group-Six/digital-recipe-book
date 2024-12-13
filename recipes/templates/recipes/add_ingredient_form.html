@@ -21,18 +21,24 @@
         <form method="post">
           {% csrf_token %}
           <div class="add-ingredient-form-group">
-            <div class="add-ingredient-form-name-area">
-              <p>Ingredient:</p>
-              {{ form.ingredient }}
-            </div>
-            <div class="add-ingredient-form-name-area">
-              <p>Unit:</p>
-              {{ form.unit }}
-            </div>
-            <div class="add-ingredient-form-name-area">
-              <p>Quantity:</p>
-              {{ form.quantity }}
-            </div>
+            {% if form.ingredient.field.choices|length > 1 %}
+              <div class="add-ingredient-form-name-area">
+                <p>Ingredient:</p>
+                {{ form.ingredient }}
+              </div>
+              <div class="add-ingredient-form-name-area">
+                <p>Unit:</p>
+                {{ form.unit }}
+              </div>
+              <div class="add-ingredient-form-name-area">
+                <p>Quantity:</p>
+                {{ form.quantity }}
+              </div>
+            {% else %}
+              <div class="no-ingredients-message">
+                <p style="color: red; font-weight: bold;">No ingredients available. Please add ingredients on the Ingredients page first.</p>
+              </div>
+            {% endif %}
           </div>
           <div class="add-ingredient-form-left-section-buttons">
             <div class="form-group submit-button">
