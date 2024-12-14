@@ -17,34 +17,37 @@
           <img src="{% static 'images/decorator-image-left.svg' %}" alt="Decorator" />
         </div>
       </div>
-      <div class="left-section-content">
+      <div class="add-ingredient-form-left-section-content">
         <form method="post">
           {% csrf_token %}
-          <div class="left-section-content" id="recipe-form-left-section-content">
-            <div class="form-group">
-              <div class="form-name-area">
-                <p style="display: inline-block; font-weight: bold;">Ingredient:</p>
+          <div class="add-ingredient-form-group">
+            {% if form.ingredient.field.choices|length > 1 %}
+              <div class="add-ingredient-form-name-area">
+                <p>Ingredient:</p>
                 {{ form.ingredient }}
               </div>
-              <div class="form-name-area">
-                <p style="display: inline-block; font-weight: bold;">Unit:</p>
+              <div class="add-ingredient-form-name-area">
+                <p>Unit:</p>
                 {{ form.unit }}
               </div>
-              <div class="form-name-area">
-                <p style="display: inline-block; font-weight: bold;">Quantity:</p>
+              <div class="add-ingredient-form-name-area">
+                <p>Quantity:</p>
                 {{ form.quantity }}
               </div>
+            {% else %}
+              <div class="no-ingredients-message">
+                <p style="color: red; font-weight: bold;">No ingredients available. Please add ingredients on the Ingredients page first.</p>
+              </div>
+            {% endif %}
+          </div>
+          <div class="add-ingredient-form-left-section-buttons">
+            <div class="form-group submit-button">
+              <button type="submit" name="add_and_continue">Add Ingredient & Add Another</button>
+            </div>
+            <div class="form-group submit-button">
+              <button type="submit" name="add_and_finish">Add Ingredient & Finish</button>
             </div>
           </div>
-          <div class="form-group submit-button">
-          <button type="submit" name="add_and_continue">Add Ingredient & Add Another</button>
-          </div>
-          <div class="form-group submit-button">
-           <button type="submit" name="add_and_finish">Add Ingredient & Finish</button>
-            </div>
-          <!-- {{ form.as_p }} -->
-          <!-- <button type="submit" name="add_and_continue">Add Ingredient & Add Another</button>
-          <button type="submit" name="add_and_finish">Add Ingredient & Finish</button> -->
         </form>
       </div>
     </div>
@@ -53,13 +56,11 @@
         <img src="{% static 'images/right-section-rolls.svg' %}" alt="Divider" />
       </div>
       <div class="right-section-content">
-        <div class="shopping-list-image-container-right">
+        <div id="add-ingredient-container-right" class="shopping-list-image-container-right">
           <img src="/static/images/ingredients.svg" alt="ingredients Icon" />
-          
         </div>
       </div>
       <div class="right-section-footer">
-        
         <div class="decorator-image-right">
           <img src="{% static 'images/decorator-image-right.svg' %}" alt="Decorator" />
         </div>
@@ -71,10 +72,6 @@
             <a href="{% url 'home' %}">Home</a>
           </div>
         </div>
-        <!-- <a href="{% url 'recipe_detail' recipe.id %}">Back to Recipe Details</a>
-        <div id="home-button" class="home-button">
-          <a href="{% url 'shopping_lists' %}">Back</a>
-        </div> -->
       </div>
     </div>
     <div class="nav-section">
