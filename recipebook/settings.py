@@ -34,6 +34,17 @@ ALLOWED_HOSTS = [
 # Embedding
 X_FRAME_OPTIONS = "ALLOWALL"
 
+# Allow cookies inside iframe for login
+SESSION_COOKIE_SAMESITE = None
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SAMESITE = None
+CSRF_COOKIE_SECURE = True
+
+# CSRF trusted origins
+CSRF_TRUSTED_ORIGINS = [
+    "https://sdevgroupsix.pythonanywhere.com",
+    "https://andreibenea.github.io",
+]
 
 # Application definition
 
