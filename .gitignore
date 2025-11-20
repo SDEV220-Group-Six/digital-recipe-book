@@ -166,3 +166,11 @@ media/
 
 # debugging
 .vscode/
+
+# iOS
+.DS_Store
+
+# certificates
+*.pem
+*.crt
+*.key

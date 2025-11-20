@@ -30,6 +30,8 @@ urlpatterns = [
     path("profile/", views.profile, name="profile"),
     path("recipebook/", include("recipes.urls")),
     path("recipebook/", include("shopping_list.urls")),
+    # CSRF token API
+    # path("get-csrf-token/", views.get_csrf_token, name="get-csrf-token")
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

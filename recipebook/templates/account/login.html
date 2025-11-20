@@ -22,4 +22,52 @@
       </form>
     </div>
   </div>
-{% endblock %}
+{% comment %} 
+  <script>
+    // Function to get CSRF token from cookies
+    function getCSRFTokenFromCookie() {
+      let csrfToken = null
+      document.cookie.split(';').forEach((cookie) => {
+        const [name, value] = cookie.trim().split('=')
+        if (name === 'csrftoken') {
+          csrfToken = decodeURIComponent(value)
+        }
+      })
+      return csrfToken
+    }
+    
+    document.addEventListener('DOMContentLoaded', function () {
+      // Ensure CSRF cookie is set
+      fetch('http://127.0.0.1:8000/login.html', { method: 'GET', credentials: 'include' })
+        .then((response) => response.text())
+        .then(() => console.log('CSRF Cookie Set'))
+        .catch((error) => console.error('CSRF Token Fetch Error:', error))
+    
+      // Attach event listener to login form submission
+      document.querySelector('#login-form').addEventListener('submit', function (event) {
+        event.preventDefault() // Prevent default form submission
+    
+        // Fetch CSRF token from cookies, not API
+        const csrftoken = getCSRFTokenFromCookie()
+        console.log('Using CSRF Token:', csrftoken)
+    
+        fetch('http://127.0.0.1:8000/login.html', {
+          method: 'POST',
+          headers: {
+            'X-CSRFToken': csrftoken, // Correct token
+            'Content-Type': 'application/x-www-form-urlencoded'
+          },
+          body: new URLSearchParams(new FormData(event.target))
+        })
+          .then((response) => {
+            if (response.ok) {
+              window.location.href = '/' // Redirect on successful login
+            } else {
+              alert('Login failed') // Show error message if login fails
+            }
+          })
+          .catch((error) => console.error('Login Request Error:', error))
+      })
+    })
+  </script>
+{% endblock %} {% endcomment %}
